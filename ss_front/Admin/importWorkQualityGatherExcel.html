@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>导入工作量汇总表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+		.uploadExcel{
+			margin-top: 40px;
+			margin-left: 40px;
+		}
+		.excel{
+			margin-top:30px;
+			padding-bottom:40px;
+		}
+		span.text-tit{
+			font-size:16px;
+			display: block;
+			line-height:28px;
+			margin-top:10px;
+			margin-bottom: 10px;
+		}
+		.excel button{
+			display: block;
+			margin-top: 40px;
+		}
+		.btn_addPic{
+			display: inline-block;
+			position: relative;
+			height: 39px;
+			overflow: hidden;
+			padding: 0 30px;
+			border: 1px solid #EBEBEB;
+			background: none repeat scroll 0 0 #F3F3F3;
+			color: #999999;
+			font: 14px/39px '微软雅黑';
+			cursor: pointer;
+			text-align: center;
+		}
+		.btn_addPic em {
+			background:url(img/add_24px.png) 0 0;
+			display: inline-block;
+			width: 24px;
+			height: 24px;
+			overflow: hidden;
+			margin: 10px 5px 10px 0;
+			line-height: 20em;
+			vertical-align: middle;
+		}
+		.filePrew {
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 140px;
+			height: 39px;
+			cursor: pointer;
+			opacity: 0;
+			filter:alpha(opacity: 0);
+		}
+  	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-8 uploadExcel">
+			<div class="title">
+				<h3 class="text-info">导入工作量汇总表</h3>
+				<div class="classExcel excel">
+					<a href="javascript:void(0);" class="btn_addPic"><span><em>+</em>添加文件</span><input type="file" tabindex="3"  size="3" name="pic" class="filePrew" id="fileClass"></a>
+					<span id="other-warning">请选择要添加的文件</span>
+					<button class="btn btn-primary tryupload">尝试导入</button>
+					<button class="btn btn-success uploadClass">确认导入</button>
+				</div>
+			</div>
+			<div class="return-info">
+				<p class="error-info"></p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+		$(function (){
+			$(".btn_addPic").on("change","input[type='file']",function (){
+				var arr=$(this).val().split("\\");
+				var fileName=arr[arr.length-1];
+				if(!fileName){
+					$("#other-warning").text("请选择要添加的文件");
+				}else{
+					$("#other-warning").text("你添加了"+fileName);
+				}
+			});
+			$(".uploadClass").on("click",function (){
+				var data={
+					"admin_confirmed":'2'
+				};
+				$(".error-info").html("");
+			    $.ajaxFileUpload({
+			        url: System.base_url+'/Admin/OtherThing/importWorkQualityGatherExcel',
+			        type: 'POST',
+			        secureuri:false,
+			        fileElementId: 'fileClass',//input的id
+			        data:data,
+			        dataType: 'json',
+			        success: function (data, status) {
+			            if(data.status == 200){
+			               alertify.alert('导入工作量汇总表', '导入成功');
+			            }else {
+			                alertify.alert('导入工作量汇总表', '导入失败');
+			                $(".error-info").html(data.msg);
+			            }
+			        },
+			        error: function (data, status) {
+			           alertify.alert('导入工作量汇总表', '出现错误');
+			        }
+			    });
+			});
+			$(".tryupload").on("click",function (){
+				var data={
+					"admin_confirmed":'1'
+				};
+				$(".error-info").html("");
+			    $.ajaxFileUpload({
+			        url: System.base_url+'/Admin/OtherThing/importWorkQualityGatherExcel',
+			        type: 'POST',
+			        secureuri:false,
+			        fileElementId: 'fileClass',//input的id
+			        data:data,
+			        dataType: 'json',
+			        success: function (data, status) {
+			            if(data.status == 200){
+			               alertify.alert('导入工作量汇总表', '导入成功');
+			            }else {
+			                alertify.alert('导入工作量汇总表', '导入失败');
+			                 var error="";
+			                for(var i=0;i<data.detail.length;i++){
+			                	error+="<p>"+data.detail[i]+"</p>";
+			                }
+			                $(".error-info").html(error);
+			            }
+			        },
+			        error: function (data, status) {
+			           alertify.alert('导入工作量汇总表', '出现错误');
+			        }
+			    });
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>导入开课一览表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+		.control{
+			margin-top: 40px;
+			margin-left: 40px;
+		}
+		.title{
+			margin-bottom: 40px;
+		}
+		.control-status{
+			margin-top: 30px;
+		}
+  	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-8 control">
+			<div class="title">
+			</div>
+			<div class="return-info">
+				<p class="error-info"></p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+		$(function (){
+			/*$("#submit").on("click",function (){
+				$("error-info").html("");
+				if($(".control-status input:checked").val()==""){
+					alertify.alert('发生错误', '请选择');
+					return;
+				}
+				var data={
+					"status":$(".control-status input:checked").val()
+				};
+				System.post(System.base_url+"/Admin/SelectBook/statusControl",data,function (res){
+					alertify.alert('状态控制', '控制成功');
+				},function (res){
+					alertify.alert('发生错误', res.msg);
+					$("error-info").html(res.msg);
+				});
+				
+			});*/
+			if(window.location.search.split("=")[1]==1){
+				$(".title").html('<h3 class="text-info">开课一览表状态控制</h3><div class="control-status clearfix class-control"><div class="col-sm-4"><input type="radio" name="status" value="1">不让教师和教务员进行操作</div><div class="col-sm-4"><input type="radio" name="status" value="2">让教务员安排教师和合班</div>');
+				System.get(System.base_url+"/Admin/Admin/showStatus",{
+					"type":1
+				},function (res){
+					$(".control-status input").eq(res.data.status-1).attr("checked",true);
+				},function (res) {
+					alertify.alert('发生错误', res.msg);
+				});
+			}else{
+				$(".title").html('<h3 class="text-warning">考试安排权限控制</h3><div class="control-status clearfix"><div class="col-sm-4"><input type="radio" name="status" value="1">不让开课院系教务员填写监考老师</div><div class="col-sm-4"><input type="radio" name="status" value="2">让开课院系教务员填写十三周考试监考老师</div><div class="col-sm-4"><input type="radio" name="status" value="3">让开课院系教务员填写十九周考试监考老师</div></div>');
+				System.get(System.base_url+"/Admin/Admin/showStatus",{
+					"type":2
+				},function (res){
+					$(".control-status input").eq(res.data.status-1).attr("checked",true);
+				},function (res) {
+					alertify.alert('发生错误', res.msg);
+				});
+			}
+			$(".control-status input").on("change",function (){
+				var data={
+					"type":window.location.search.split("=")[1],
+					"status":$(this).val()
+				};
+				System.post(System.base_url+"/Admin/Admin/updateStatus",data,function (res){
+					alertify.alert('修改权限',"修改成功");
+				},function (res){
+					alertify.alert('发生错误', res.msg);
+				});
+			});
+			
+		});
+	</script>
+</body>
+</html>

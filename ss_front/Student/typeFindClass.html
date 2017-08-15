@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>学生查找系统</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/typeFindClass.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+</head>
+<body>
+	<div class="header">
+		<h3>学生查找系统</h3>
+	</div>
+	<div class="container">
+		<div class="side">
+		</div>
+		<div class="main clearfix">
+			<div class="list clearfix">
+				<ul>
+					<li><a href="javascript:void(0);" onclick="getTypeClass(1)" id="active">专升本</a></li>
+					<li><a href="javascript:void(0)" onclick="getTypeClass(2)">专科</a></li>
+					<li><a href="javascript:void(0)" onclick="getTypeClass(3)">村官班</a></li>
+				</ul>
+			</div>
+			<div class="table-list"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+</body>
+</html>
+<script>
+	function getTypeClass(type){
+		var data={
+		    "type":type
+		};
+		$(".table-list").html("");
+		System.get(System.base_url+"/Home/Course/getClassByClassType",data,function (res){		
+			if(res.data.length>0){
+				var cols=Math.ceil(res.data.length/3);
+				var classList="<table class='table-index'>";
+				for(var i=0;i<cols;i++){
+					classList+="<tr>";
+					for(var j=3*i;j<3*i+3;j++){
+						if(res.data[j]){
+							if(j%2){
+								classList+="<td class='succ'>";
+							}else{
+								classList+="<td class='info'>";
+							}
+							
+							classList+="<a href='studentClassShow.html?class_name="+res.data[j]+"'>"+res.data[j]+"</a>";
+							classList+="</td>";
+						}
+					}
+					classList+="</tr>";
+				}
+				classList+="</table>";
+				$(".table-list").append(classList);
+			}else{
+				$(".table-list").append("<span class='text-tit text-center'>未查询到信息</sapn>");
+			}
+			
+		},function (res){
+
+			$(".table-list").append("<span class='text-tit text-center'>"+res.msg+"</sapn>");
+		});
+	}
+	$(function (){
+		$(".side").load("side.html");
+		$("#active").trigger("click");
+
+	});
+</script>

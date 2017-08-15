@@ -1,0 +1,74 @@
+.content{
+    border:1px solid #ccc;
+	margin-left:20px;
+	margin-top:7%;
+}
+.show-content
+{
+	padding-bottom:30px;
+	margin-top:40px;
+}
+.nav-title .text-index{
+	font-size:16px;
+	color:red;
+}
+.time-list{
+	display:block;
+}
+hr{
+	width:100%;
+	height:1px;
+	background: #000;
+	margin: 0px;
+	padding: 0px;
+}
+.submit-btn{
+	width:36%;
+	margin:auto;
+}
+.table-index{
+	margin-top:30px;
+}
+.table-index td,th{
+	vertical-align:middle;
+	padding:5px 10px;
+	word-break:break-all;
+	text-align: center;
+}
+.table-index td span{
+	word-break:break-all;
+	display:block;
+}
+.table-index td>a{
+	color:#000;
+}
+.admin-tit h3{
+	line-height:60px;
+}
+.admin-info{
+	text-align: center;
+}
+.admin-info h3{
+	font-weight: bold;
+	font-size:16px;
+}
+.function li{
+	line-height: 30px;
+}
+.error-info{
+	text-align: center;
+	color:red;
+}
+td.big-td{
+	margin: 0px !important;
+	padding: 0px !important;
+}
+td.big-td table tr td + td{
+	border-left:1px solid #000;
+}
+td.big-td table td{
+	width:81px;
+}
+td.big-td table tr +tr{
+	border-top:1px solid #000;
+}

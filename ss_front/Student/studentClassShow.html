@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>查看班级课表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/studentFindClass.css" />
+	<style>
+		
+		table.table-index{
+			margin:10px auto;
+		}
+		td,th{
+			width:100px;
+			text-align: center;
+			word-break:break-all;
+			vertical-align: middle;
+			border-color: #000 !important;
+		}
+		a{
+			cursor: pointer;
+		}
+		.pagination{
+			width:300px;
+			margin:auto;
+			display: block;
+		}
+		.hr{
+			height:1px;
+			background:#000
+		}
+	</style>
+</head>
+<body>
+	<div class="table-list"></div>
+	<div id="pagelist"></div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+</body>
+</html>
+<script>
+	function makeNavigation(
+            current,     //当前页数
+            total_page,    //总页数
+            getData,        //ajax请求函数
+            show_id,        //分页条展示div ID
+            num_links,     //分页条长度的一半
+            class_name
+    ) {
+
+        if(total_page < 2) return;
+
+        num_links = num_links? num_links: 3;  //导航条长度
+
+        //存放导航条
+        navicate = '<ul class="pagination">'; //返回第一页按钮
+
+        //判断第一页是否有效
+        if(current == 1)
+            navicate += '<li class="disabled">';
+        else
+            navicate += '<li>';
+
+        navicate +=         '<a onclick="' + getData + '(1'+","+"\'"+class_name+"\'"+')"> '+
+                                '<span><<</span>' +
+                            '</a>' +
+                        '</li>';
+
+
+        //数字导航
+        for(i = current - num_links; i <= current + num_links; i++) {
+            if(i > 0 && i <= total_page) {
+                if(i == current)
+                    navicate += '<li class="active"><a onclick="' + getData + '(' + i +","+"\'"+class_name+"\'"+ ')">' + i + '</a></li>';
+                else
+                    navicate += '<li><a onclick="' + getData + '(' + i +","+"\'"+class_name+"\'"+')">' + i + '</a></li>';
+            }
+        }
+
+        //判断最后一页是否有效
+        if(current == total_page)
+            navicate += '<li class="disabled">';
+        else
+            navicate += '<li>';
+
+        navicate +=         '<a onclick="' + getData + '(' + total_page +","+"\'"+class_name+"\'"+ ')">' +
+                                '<span>>></span>' +
+                            '</a>' +
+                        '</li>' ;   //跳到最后一页按钮
+
+
+
+
+        navicate +=     '<li>' +
+                            '<span>第' + current + '页/共' + total_page + '页</span>' +
+                        '</li>' +
+                    '</ul>';
+
+
+        $('#' + show_id).html(navicate);
+    }
+	function getData(page,class_name){
+		var limit=6;
+		var data={
+		"page":page,
+		"limit":limit,
+		"class_name":class_name
+		};
+		System.get(System.base_url+"/Home/Course/queryCourse",data,function (res){
+			$(".table-list").html("");
+			var total_page=Math.ceil(res.data.sum/limit);
+			var rows=res.data.course_data.length;
+			console.log(res);
+			var classList="<table class='table-bordered table-index'><tr><th>上课院系</th><th>班级名称</th><th>课程代号</th><th>课程名称</th><th>考核方式</th><th>总学时</th><th>理论学时</th><th>实践学时</th><th>任课教师</th><th>上课时间</th><th>上课周次</th><th>上课地点</th></tr>";
+			for(var i=0;i<rows;i++){
+				classList+="<tr>";
+				if(res.data.course_data[i].academy){
+					classList+="<td>"+res.data.course_data[i].academy+"</td>";
+				}
+				else{
+					classList+="<td></td>";
+				}
+				classList+="<td>"+res.data.course_data[i].class_name+"</td>";
+				classList+="<td>"+res.data.course_data[i].code+"</td>";
+				classList+="<td>"+res.data.course_data[i].name+"</td>";
+				classList+="<td>"+res.data.course_data[i].examine_way+"</td>";
+				classList+="<td>"+res.data.course_data[i].time_total+"</td>";
+				classList+="<td>"+res.data.course_data[i].time_theory+"</td>";
+				classList+="<td>"+res.data.course_data[i].time_practice+"</td>";
+				classList+="<td>"+res.data.course_data[i].teacher+"</td>";
+				classList+="<td class='big-td' colspan=3>";
+				classList+="<table >";
+				for(var j=0;j<res.data.course_data[i].classroom_time.length;j++){
+					classList+="<tr>";
+					classList+="<td>"+res.data.course_data[i].classroom_time[j].weekday+"</td>";
+					classList+="<td>"+res.data.course_data[i].classroom_time[j].week+"</td>";
+					classList+="<td>"+res.data.course_data[i].classroom_time[j].classroom+"</td>";
+					classList+="</td></tr>";
+				}
+				/*classList+="</table>";
+				classList+="</td>";
+
+				classList+="<td class='big-td'>";
+				classList+="<table >";
+				for(var j=0;j<res.data.course_data[i].classroom_time.length;j++){
+					classList+="<tr><td>";
+					classList+=res.data.course_data[i].classroom_time[j].week;
+					classList+="</td></tr>";
+				}
+				classList+="</table>";
+				classList+="</td>";
+
+				classList+="<td class='big-td'>";
+				classList+="<table >";
+				for(var j=0;j<res.data.course_data[i].classroom_time.length;j++){
+					classList+="<tr><td>";
+					classList+=res.data.course_data[i].classroom_time[j].classroom;
+					classList+="</td></tr>";
+				}*/
+				classList+="</tr></table>";
+				classList+="</td>";
+				classList+="</tr>";
+			}
+			classList+="</table>";
+			$(".table-list").append(classList);
+			makeNavigation(page,total_page, 'getData', 'pagelist', 2,class_name);
+		},function (res){
+			console.log(res);
+		});
+	}
+	$(function (){
+		var classname=window.location.search.split("=")[1];
+		getData(1,classname);
+		
+	});
+</script>

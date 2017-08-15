@@ -1,0 +1,53 @@
+<div class="nav-bar navbar navbar-inverse">
+	<div class="conatiner">
+		<div class="navbar-header">
+			<a href="manager.html" class="navbar-brand navbar-title"></a>
+		</div>
+	    <div class="navbar-content clearfix">
+	    	<ul class="nav-ul nav navbar-nav">
+	        	<li><a href="javascript:void(0)" class="updatePassword" data-toggle="modal" data-target="#comments">修改密码</a></li>
+	        	<div class="modal fade" id="comments" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		          <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title" id="myModalLabel">修改密码</h4>
+		              </div>
+		              <div class="modal-body">
+		                <form class="form-horizontal" id="" enctype="multipart/form-data">
+		                    <div class="form-group">
+		                       <label for="pre_password" class="col-sm-3 control-label">请输入旧密码：</label>
+		                        <div class="col-sm-8">
+		                          <input type="password" class="form-control" name="pre_password" id="pre_password" placeholder="请输入旧密码">
+		                        </div>
+		                    </div>
+		                     <div class="form-group">
+		                       <label for="new_password" class="col-sm-3 control-label">请输入新密码：</label>
+		                        <div class="col-sm-8">
+		                          <input type="password" class="form-control" name="new_password" id="new_password" placeholder="请输入新密码">
+		                        </div>
+		                    </div>
+		                    <div class="form-group">
+		                       <label for="comfirmpwd" class="col-sm-3 control-label">请输入确认密码：</label>
+		                        <div class="col-sm-8">
+		                          <input type="password" class="form-control" name="comfirmpwd" id="comfirmpwd" placeholder="请输入确认密码">
+		                        </div>
+		                    </div>
+		                    <div class="form-group">
+		                    	<p class="error-info"></p>
+		                    </div>
+		                    <div class="modal-footer">
+		                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		                        <button type="button" class="btn btn-primary" id="password-sub">提交</button>
+		                    </div>
+		                </form>
+		              </div>
+		              
+		            </div>
+		          </div>
+ 				</div>
+	            <li><a href="javascript:;" class="logout">退出登录</a></li>
+	        </ul>
+	    </div>
+	</div>
+</div>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>教务员管理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/adminManger.css">
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+</head>
+<body>
+	<div id="header"></div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-9">
+			<div class="header">
+				<h3  class="text-warning">教务员管理</h3>
+				<div class="add-Admin clearfix">
+					<!--button class="btn btn-primary pull-right mr" data-toggle="modal" data-target="#importAdminExcel">导入教务员表</button>
+					<div class="modal fade" id="importAdminExcel" tabindex="-1" role="dialog" aria-labelledby="myModalLabe2">
+				        <div class="modal-dialog" role="document">
+				            <div class="modal-content">
+				              <div class="modal-header">
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                <h4 class="modal-title" id="myModalLabe2">导入教务员表</h4>
+				              </div>
+				              <div class="modal-body">
+				                <div class="uploadExcel">
+									<h3>导入excel表</h3>
+									<div class="classExcel excel">
+										<a href="javascript:void(0);" class="btn_addPic btn-adminUpload"><span><em>+</em>添加文件</span><input type="file" tabindex="3"  size="3" name="pic" class="filePrew" id="fileAdmin"></a>
+										<span id="admin-warning">请选择要添加的文件</span>
+										<button class="btn btn-success uploadAdmin">点击导入</button>
+									</div>
+								</div>
+				              </div>
+				            </div>
+				        </div>
+	     			</div>
+					<button class="btn btn-danger pull-right mr" id="deleteAdmin">清空数据</button-->
+					<button class="btn btn-info pull-right mr" data-toggle="modal" data-target="#addAdmin">添加教务员</button>
+					<div class="modal fade" id="addAdmin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				        <div class="modal-dialog" role="document">
+				            <div class="modal-content">
+				              <div class="modal-header">
+				                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				                <h4 class="modal-title" id="myModalLabel">添加学院教务员</h4>
+				              </div>
+				              <div class="modal-body">
+				                <form class="form-horizontal" id="" enctype="multipart/form-data">
+				                	<div class="form-group">
+				                       <label for="name" class="col-sm-3 control-label">请输入姓名：</label>
+				                        <div class="col-sm-8">
+				                          <input type="text" class="form-control" name="name" id="name" placeholder="请输入姓名">
+				                        </div>
+				                    </div>
+				                    <div class="form-group">
+				                       <label for="account" class="col-sm-3 control-label">请输入账号：</label>
+				                        <div class="col-sm-8">
+				                          <input type="text" class="form-control" name="account" id="account" placeholder="请输入账号">
+				                        </div>
+				                    </div>
+				                    <div class="form-group">
+				                       <label for="password" class="col-sm-3 control-label">请输入密码：</label>
+				                        <div class="col-sm-8">
+				                          <input type="text" class="form-control" name="password" id="password" value="123456">
+				                        </div>
+				                    </div>
+				                    <div class="form-group">
+				                       <label for="" class="col-sm-3 control-label">请选择学院：</label>
+				                        <div class="col-sm-8">
+				                          <select name="academy_id" id="academy_id" class="form-control">
+				                          	<option value=""></option>
+				                          	<option value="1">经济管理学院</option>
+											<option value="2">政法学院</option>
+											<option value="3">马克思主义学院</option>
+											<option value="4">文学院</option>
+											<option value="5">外国语学院</option>
+											<option value="6">数学与计算科学学院</option>
+											<option value="7">应用物理与材料学院</option>
+											<option value="8">信息工程学院</option>
+											<option value="9">计算机学院</option>
+											<option value="10">机电工程学院</option>
+											<option value="11">土木建筑学院</option>
+											<option value="12">化学与环境工程学院</option>
+											<option value="13">纺织服装学院</option>
+											<option value="14">轨道交通学院</option>
+											<option value="15">艺术设计学院</option>
+											<option value="16">体育部</option>
+											<option value="17">继续教育学院</option>
+				                          </select>
+				                        </div>
+				                    </div>
+				                    <div class="form-group">
+				                    	<p class="add-error-info"></p>
+				                    </div>
+				                    <div class="modal-footer">
+				                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+				                        <button type="button" class="btn btn-primary" id="addAdmin-sub">提交</button>
+				                    </div>
+				                </form>
+				              </div>
+				            </div>
+				        </div>
+	     			</div>
+				</div>
+			</div>
+			<div class="search-admin">
+				<form class="form-horizontal" id="" enctype="multipart/form-data">
+	            	<div class="form-group">
+	                   <label for="name" class="col-sm-3 control-label">请输入姓名：</label>
+	                    <div class="col-sm-8">
+	                      <input type="text" class="form-control" name="name" id="searchname" placeholder="请输入姓名">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                   <label for="account" class="col-sm-3 control-label">请输入账号：</label>
+	                    <div class="col-sm-8">
+	                      <input type="text" class="form-control" name="account" id="searchaccount" placeholder="请输入账号">
+	                    </div>
+	                </div>
+	                 <div class="form-group">
+		               <label for="" class="col-sm-3 control-label">请选择学院：</label>
+		                <div class="col-sm-8">
+		                  <select name="academy_id" id="searchacademy_id" class="form-control">
+		                    <option value=""></option>
+		                  	<option value="1">经济管理学院</option>
+							<option value="2">政法学院</option>
+							<option value="3">马克思主义学院</option>
+							<option value="4">文学院</option>
+							<option value="5">外国语学院</option>
+							<option value="6">数学与计算科学学院</option>
+							<option value="7">应用物理与材料学院</option>
+							<option value="8">信息工程学院</option>
+							<option value="9">计算机学院</option>
+							<option value="10">机电工程学院</option>
+							<option value="11">土木建筑学院</option>
+							<option value="12">化学与环境工程学院</option>
+							<option value="13">纺织服装学院</option>
+							<option value="14">轨道交通学院</option>
+							<option value="15">艺术设计学院</option>
+							<option value="16">体育部</option>
+							<option value="17">继续教育学院</option>
+		                  </select>
+		                </div>
+		            </div>
+	                <div class="form-group">
+	                	<p class="search-error-info"></p>
+	                </div>
+					<div class="form-footer clearfix">
+						<button type="button" class="btn btn-success btn-search">查找</button>
+					</div>
+	            </form>
+	            <div class="table-list"></div>
+			  	<div id="pagelist"></div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="updataAdmin" tabindex="-1" role="dialog" aria-labelledby="upload">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="upload">修改学院教务员</h4>
+	          </div>
+	          <div class="modal-body">
+	            <form class="form-horizontal" id="" enctype="multipart/form-data">
+	            	<div class="form-group">
+	                   <label for="name" class="col-sm-3 control-label">姓名：</label>
+	                    <div class="col-sm-8">
+	                      <input type="text" class="form-control" name="name" id="newName">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                   <label for="account" class="col-sm-3 control-label">账号：</label>
+	                    <div class="col-sm-8">
+	                      <input type="text" class="form-control" name="account" id="newAccount">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                   <label for="password" class="col-sm-3 control-label">密码：</label>
+	                    <div class="col-sm-8">
+	                      <input type="text" class="form-control" name="password" id="newPassword"  value="123456">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                   <label for="" class="col-sm-3 control-label">学院：</label>
+	                    <div class="col-sm-8">
+	                      <select name="academy_id" id="updata-academy_id" class="form-control">
+	                      	<option value="0"></option>
+	                      	<option value="1">经济管理学院</option>
+							<option value="2">政法学院</option>
+							<option value="3">马克思主义学院</option>
+							<option value="4">文学院</option>
+							<option value="5">外国语学院</option>
+							<option value="6">数学与计算科学学院</option>
+							<option value="7">应用物理与材料学院</option>
+							<option value="8">信息工程学院</option>
+							<option value="9">计算机学院</option>
+							<option value="10">机电工程学院</option>
+							<option value="11">土木建筑学院</option>
+							<option value="12">化学与环境工程学院</option>
+							<option value="13">纺织服装学院</option>
+							<option value="14">轨道交通学院</option>
+							<option value="15">艺术设计学院</option>
+							<option value="16">体育部</option>
+							<option value="17">继续教育学院</option>
+	                      </select>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                	<p class="updata-error-info"></p>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                    <button type="button" class="btn btn-primary" id="upadtaAdmin-sub">提交</button>
+	                </div>
+	            </form>
+	          </div>
+	        </div>
+	    </div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	alertify.dialog('indexAlert',function factory(){
+	    return{
+	        build: function () {
+	            var header = '<span'+'style="vertical-align:middle;color:#e10000;">'+'</span> 教务员管理';
+	            this.setHeader(header);
+	        },
+	        main:function(message){
+	            this.message = message;
+	        },
+	        setup:function(){
+	            return {
+	                buttons:[{text: "确定", key:27}],/*Esc*/
+	                focus: { element:0 }
+	            };
+	        },
+	        prepare: function(){
+	            this.setContent(this.message);
+	        },
+	        callback: function () {
+	            window.location.href="adminManger.html";
+	            return true;
+	        }
+	    };
+	});
+	function uploadAdmin(account,name,academy_id){
+		$("#newName").val(name);
+		$("#newAccount").val(account);
+		$("#updata-academy_id").val(academy_id);
+	}
+	function deleteAdmin(account){
+		var data={
+			"account":account,
+			"admin_level":2
+		};
+		alertify.confirm('删除教务员', '你确认删除该学院教务员吗', function(){ 
+			System.post(System.base_url+"/Admin/Admin/deleteAdmin",data,function (res){
+			alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>删除成功</b>");
+			},function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>删除有误</b>");
+			});
+		 }, function(){ });
+	}
+	function getData(page,dataJson){
+		$(".table-list").html("");
+		var limit=6;
+		if(dataJson&&dataJson!=="null"){
+			dataJson=dataJson.split("&");
+			var data={};
+			for(var i=0;i<dataJson.length;i++){
+				data[dataJson[i].split("=")[0]]=dataJson[i].split("=")[1];
+				console.log(dataJson);
+			}
+			console.log(data);
+		}else{
+			var data={
+				"admin_level":2
+			};
+			if($("#searchname").val()){
+				data.name=$("#searchname").val();
+			}
+			if($("#searchaccount").val()){
+				data.account=$("#searchaccount").val();
+			}
+			if($("#searchacademy_id").val()){
+				data.academy_id=$("#searchacademy_id").val();
+			}
+		}
+		data.limit=limit;
+		data.page=page;
+		System.post(System.base_url+"/Admin/Admin/searchAdmin",data,function (res){
+			var total_page=Math.ceil(res.data.sum/limit);
+			var rows=res.data.teacher_data;
+			console.log(rows);
+			if(rows.length<=0){
+				$(".table-list").html("<p class='text-center text-danger'>未查到信息<p>");
+				return;
+			}
+			var teacherList="<table class='table table-index'><th>所属学院</th><th>账号</th><th>名字</th><th>操作</th>";
+			for(var i=0;i<rows.length;i++){
+				teacherList+="<tr>";
+				if(rows[i].academy){
+					teacherList+="<td>"+rows[i].academy+"</td>";
+				}else{
+					teacherList+="<td></td>";
+				}
+				teacherList+="<td>"+rows[i].account+"</td>";
+				teacherList+="<td>"+rows[i].name+"</td>";
+				teacherList+="<td><button class='btn btn-default' onclick='uploadAdmin(\""+rows[i].account+"\",\""+rows[i].name+"\","+rows[i].academy_id+")' data-toggle='modal' data-target='#updataAdmin'>修改</button>";
+				teacherList+="<button class='btn btn-danger' onclick='deleteAdmin(\""+rows[i].account+"\")' >删除</td></button>";
+				teacherList+="</tr>";
+			}
+			teacherList+="</table>";
+			$(".table-list").html(teacherList);
+			makeNavigation(page,total_page, 'getData', 'pagelist', 2,data);
+		},function (res){
+			$(".table-list").html("<span class='text-tit text-center'>未查询到信息</sapn>");
+		});
+	}
+	$(function (){
+		$("#addAdmin-sub").on("click",function (){
+			var data={
+				"admin_level":"2",
+				"name":$("#name").val(),
+				"account":$("#account").val(),
+				"password":$("#password").val(),
+				"academy_id":$("#academy_id").val()
+			};
+			console.log(data);
+			System.post(System.base_url+"/Admin/Admin/addAdmin",data,function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>添加成功</b>");
+			},function (res){
+				$(".add-error-info").html("<p class='text-center text-danger'>"+res.msg+"</p>");
+			});
+		});
+		$(".btn-search").on("click",function (){
+			$("#pagelist").html("");
+			getData(1);
+		});
+		$("#upadtaAdmin-sub").on("click",function (){
+			var data={
+				"admin_level":2,
+				"account":$("#newAccount").val(),
+				"name":$("#newName").val(),
+				"password":$("#newPassword").val(),
+				"academy_id":$("#updata-academy_id").val()
+			};
+			System.post(System.base_url+"/Admin/Admin/updateAdmin",data,function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>修改成功</b>");
+			},function (res){
+				$(".updata-error-info").html("<p class='text-center text-danger'>"+res.msg+"</p>");
+			});
+		});
+		$(".btn-adminUpload").on("change","input[type='file']",function (){
+			var arr=$(this).val().split("\\");
+			var fileName=arr[arr.length-1];
+			if(!fileName){
+				$("#admin-warning").text("请选择要添加的文件");
+			}else{
+				$("#admin-warning").text("你添加了"+fileName);
+			}
+		});
+		/*$(".uploadAdmin").on("click",function (){
+		    $.ajaxFileUpload({
+		        url: System.base_url+'/Admin/Admin/importAdminExcel',
+		        type: 'POST',
+		        secureuri:false,
+		        fileElementId: 'fileAdmin',//input的id
+		        dataType: 'json',
+		        data:{
+		        	"admin_level":2
+		        },
+		        success: function (data, status) {
+		            if(data.code == 200){
+		               alertify.alert('导入教务员表', '导入成功');
+		            }else {
+		                alertify.alert('导入教务员表', '导入失败');
+		            }
+		        },
+		        error: function (data, status) {
+		           console.log(data);
+		        }
+		    });
+		});
+		$("#deleteAdmin").on("click",function (){
+			var data={
+				"admin_level":2
+			};
+			alertify.confirm('清空数据', '你确认清空数据吗？清空后不可恢复', function(){ 
+				System.post(System.base_url+"/Admin/Admin/clearAdminData",data,function (){
+					alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>清空成功</b>");
+				},function (res){
+					alertify.alert('清空数据', res.msg);
+				});
+			 }, function(){ });
+			
+		});*/
+	});
+</script>

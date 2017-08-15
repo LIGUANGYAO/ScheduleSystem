@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>教师普教管理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+  		.title{
+  			margin-bottom:30px;
+  		}
+		.search-info{
+			margin-top: 40px;
+			margin-left: 40px;
+		}
+		.search{
+			margin-top: 30px;
+		}
+		.return-info{
+			margin-top: 60px;
+		}
+		.result{
+			margin-top: 80px;
+		}
+  	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-8 search-info">
+			<div class="title">
+				<h3 class="text-warning">获取教师普教上课的时间</h3>
+				<div class="search">
+					<button class="btn btn-info" id="getTime">点击获取</button>
+				</div>
+			</div>
+			<div class="title">
+				<h3 class="text-info">查看教师普教上课时间</h3><span>(此处显示的是当前学期的数据)</span>
+				<div class="search">
+					<form role="form" class="form-horizontal" id="Adminform">
+				  		<div class="form-group">
+				  			<label for="teacher_name" class="col-sm-2 control-label">教师名称</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="teacher_name" 
+								name="teacher_name">
+							</div>
+				  		</div>
+				  	</form>
+				</div>
+			</div>
+			<div class="submit-search col-sm-3 pull-right clearfix">
+				<button class="btn btn-success" id="search-btn">查找</button>
+			</div>
+			<div class="result"></div>
+			<div class="return-info">
+				<p class="error-info"></p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	$(function (){
+		$("#search-btn").on("click",function (){
+			var data={
+				"teacher_name":$("#teacher_name").val()
+			};
+			System.get(System.base_url+"/Admin/SelectBook/showTeacherExistingClass",data,function (res){
+				console.log(res);
+				var teacherList="<table class='table table-bordered text-center'><tr><td>姓名</td><td>时间</td></tr>";
+				for(var i=0;i<res.data.length;i++){
+					teacherList+="<tr>";
+					teacherList+="<td>"+res.data[i].name+"</td>";
+					teacherList+="<td>";
+					var length=res.data[i].existing_class.split('\\').length;
+					console.log(length);
+					for(var j=0;j<length;j++){
+						teacherList+="<div>"+res.data[i].existing_class.split('\\')[j]+"</div>";
+					}
+					teacherList+="</td>";
+					teacherList+="</tr>";
+				}
+				teacherList+="</table>";
+				console.log(teacherList);
+				$(".result").html(teacherList);
+			},function (res){
+				alertify.alert('教师普教管理', res.msg);
+			});
+		});
+		$("#getTime").on("click",function (){
+			System.get(System.base_url+"/Admin/SelectBook/getTeacherExistingClass","",function (res){
+				alertify.alert('时间管理','获取成功');
+			},function (res){
+				
+			});
+
+		});
+	});
+
+</script>

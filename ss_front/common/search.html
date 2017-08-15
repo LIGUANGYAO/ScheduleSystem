@@ -1,0 +1,60 @@
+<div class="nav-title">
+	<h3 class="text-danger">模糊查询<span class="text-index">可填写任意字段<span></h3>
+</div>
+<form role="form" class="form-horizontal" id="Adminform">
+	<div class="form-group">
+		<label for="class_name" class="col-sm-2 control-label">班级名称</label>
+	<div class="col-sm-6">
+		<input type="text" class="form-control" id="class_name" 
+		name="class_name">
+	</div>
+	</div>
+	<div class="form-group">
+		<label for="academy" class="col-sm-2 control-label">学院名称</label>
+		<div class="col-sm-6">
+			<select name="academy" id="academy" class="form-control">
+              	<option value=""></option>
+              	<option value="经济管理学院">经济管理学院</option>
+				<option value="政法学院">政法学院</option>
+				<option value="马克思主义学院">马克思主义学院</option>
+				<option value="文学院">文学院</option>
+				<option value="外国语学院">外国语学院</option>
+				<option value="数学与计算科学学院">数学与计算科学学院</option>
+				<option value="应用物理与材料学院">应用物理与材料学院</option>
+				<option value="信息工程学院">信息工程学院</option>
+				<option value="计算机学院">计算机学院</option>
+				<option value="机电工程学院">机电工程学院</option>
+				<option value="土木建筑学院">土木建筑学院</option>
+				<option value="化学与环境工程学院">化学与环境工程学院</option>
+				<option value="纺织服装学院">纺织服装学院</option>
+				<option value="轨道交通学院">轨道交通学院</option>
+				<option value="艺术设计学院">艺术设计学院</option>
+				<option value="体育部">体育部</option>
+				<option value="继续教育学院">继续教育学院</option>
+            </select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="code" class="col-sm-2 control-label">课程代号</label>
+		<div class="col-sm-6">
+			<input type="text" name="code" class="form-control" id="code">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="name" class="col-sm-2 control-label">课程名称</label>
+		<div class="col-sm-6">
+			<input type="text" name="name" class="form-control" id="name">
+		</div>
+	</div>
+	<div class="form-group">
+		<label for="teacher" class="col-sm-2 control-label">教师姓名</label>
+		<div class="col-sm-6">
+			<input type="text" name="teacher" class="form-control" id="teacher">
+		</div>
+	</div>
+</form>
+<div class="submit-btn clearfix">
+	<button class="btn btn-success pull-right" id="submit">点击查询</button>
+</div>
+<div class="table-list"></div>
+<div id="pagelist"></div>

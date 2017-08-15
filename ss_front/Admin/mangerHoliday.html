@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>节假日管理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/mangerHoliday.css">
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+</head>
+<body>
+	<div id="header"></div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-8">
+			<div class="title-header clearfix">
+				<h3 class="text-info">节假日管理</h3>
+				<button class="btn btn-primary pull-right" data-toggle="modal" data-target="#addHoliday">添加</button>
+				<div class="modal fade" id="addHoliday" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			              <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                <h4 class="modal-title" id="myModalLabel">添加节假日</h4>
+			              </div>
+			              <div class="modal-body">
+			                <form class="form-horizontal" id="" enctype="multipart/form-data" role="form">
+			                    <div class="form-group">
+			                       <label for="" class="col-sm-3 control-label">请选择周数：</label>
+			                        <div class="col-sm-7">
+			                          <select name="week" id="weekmanger" class="add form-control" >
+			                          	<option value="1">第一周</option>
+			                          	<option value="2">第二周</option>
+			                          	<option value="3">第三周</option>
+			                          	<option value="4">第四周</option>
+			                          	<option value="5">第五周</option>
+			                          	<option value="6">第六周</option>
+			                          	<option value="7">第七周</option>
+			                          	<option value="8">第八周</option>
+			                          	<option value="9">第九周</option>
+			                          	<option value="10">第十周</option>
+			                          	<option value="11">第十一周</option>
+			                          	<option value="12">第十二周</option>
+			                          	<option value="13">第十三周</option>
+			                          	<option value="14">第十四周</option>
+			                          	<option value="15">第十五周</option>
+			                          	<option value="16">第十六周</option>
+			                          	<option value="17">第十七周</option>
+			                          	<option value="18">第十八周</option>
+			                          	<option value="19">第十九周</option>
+			                          	<option value="20">第二十周</option>
+			                          </select>
+			                        </div>
+			                       
+			                    </div>
+			                    <div class="form-group weeklist">
+			                    	<label for="name" class="col-sm-3 control-label">请选择星期：</label>
+			                    	<div class="col-sm-8">
+			                        	<div class="col-sm-3">
+			                        		<input type="checkbox" value="1">星期一
+			                        	</div>
+			                        	<div class="col-sm-3">
+			                        		<input type="checkbox" value="2">星期二
+			                        	</div>
+			                        	<div class="col-sm-3">
+			                        		<input type="checkbox" value="3">星期三
+			                        	</div>
+			                        	<div class="col-sm-3">
+			                        		<input type="checkbox" value="4">星期四
+			                        	</div>
+			                        	<div class="col-sm-3">
+			                        		<input type="checkbox" value="5">星期五
+			                        	</div>
+			                        	<div class="col-sm-3">
+			                        		<input type="checkbox" value="6">星期六
+			                        	</div>
+			                        	<div class="col-sm-3">
+			                        		<input type="checkbox" value="7">星期日
+			                        	</div>
+			                        </div>
+			                    	
+			                    </div>
+			                    <div class="form-group">
+			                    	<p class="error-info"></p>
+			                    </div>
+			                    <div class="modal-footer">
+			                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			                        <button type="button" class="btn btn-primary" id="holiday-sub">添加</button>
+			                    </div>
+			                </form>
+			              </div>
+			              
+			            </div>
+			        </div>
+	     		</div>
+			</div>
+			<div class="holiday-manger"></div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="updateHolidays" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="myModalLabel">修改节假日</h4>
+	          </div>
+	          <div class="modal-body">
+	            <form class="form-horizontal" id="" enctype="multipart/form-data" role="form">
+	                <div class="form-group">
+	                   <label for="" class="col-sm-3 control-label">请选择周数：</label>
+	                    <div class="col-sm-7">
+	                      <select name="week" id="newWeek" class="add form-control" >
+	                      	<option value="1">第一周</option>
+	                      	<option value="2">第二周</option>
+	                      	<option value="3">第三周</option>
+	                      	<option value="4">第四周</option>
+	                      	<option value="5">第五周</option>
+	                      	<option value="6">第六周</option>
+	                      	<option value="7">第七周</option>
+	                      	<option value="8">第八周</option>
+	                      	<option value="9">第九周</option>
+	                      	<option value="10">第十周</option>
+	                      	<option value="11">第十一周</option>
+	                      	<option value="12">第十二周</option>
+	                      	<option value="13">第十三周</option>
+	                      	<option value="14">第十四周</option>
+	                      	<option value="15">第十五周</option>
+	                      	<option value="16">第十六周</option>
+	                      	<option value="17">第十七周</option>
+	                      	<option value="18">第十八周</option>
+	                      	<option value="19">第十九周</option>
+	                      	<option value="20">第二十周</option>
+	                      </select>
+	                    </div>
+	                </div>
+	                <div class="form-group new-days">
+	                	<label for="name" class="col-sm-3 control-label">请选择星期：</label>
+	                	<div class="col-sm-8">
+	                    	<div class="col-sm-3">
+	                    		<input type="checkbox" value="1">星期一
+	                    	</div>
+	                    	<div class="col-sm-3">
+	                    		<input type="checkbox" value="2">星期二
+	                    	</div>
+	                    	<div class="col-sm-3">
+	                    		<input type="checkbox" value="3">星期三
+	                    	</div>
+	                    	<div class="col-sm-3">
+	                    		<input type="checkbox" value="4">星期四
+	                    	</div>
+	                    	<div class="col-sm-3">
+	                    		<input type="checkbox" value="5">星期五
+	                    	</div>
+	                    	<div class="col-sm-3">
+	                    		<input type="checkbox" value="6">星期六
+	                    	</div>
+	                    	<div class="col-sm-3">
+	                    		<input type="checkbox" value="7">星期日
+	                    	</div>
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                	<input type="hidden" id="newID">
+	                </div>
+	                <div class="form-group">
+	                	<p class="new-error-info"></p>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                    <button type="button" class="btn btn-primary" id="newholiday-sub">添加</button>
+	                </div>
+	            </form>
+	          </div>
+	          
+	        </div>
+	    </div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+	<script type="text/javascript" src="js/common.js"></script> 
+</body>
+</html>
+<script>
+	alertify.dialog('indexAlert',function factory(){
+	    return{
+	        build: function () {
+	            var header = '<span'+'style="vertical-align:middle;color:#e10000;">'+'</span> 节假日管理';
+	            this.setHeader(header);
+	        },
+	        main:function(message){
+	            this.message = message;
+	        },
+	        setup:function(){
+	            return {
+	                buttons:[{text: "确定", key:27}],/*Esc*/
+	                focus: { element:0 }
+	            };
+	        },
+	        prepare: function(){
+	            this.setContent(this.message);
+	        },
+	        callback: function () {
+	            window.location.href="mangerHoliday.html";
+	            return true;
+	        }
+	    };
+	});
+	function deleteHoliday(id){
+		var data={
+			"id":id
+		};
+		console.log(data);
+		alertify.confirm('删除节假日', '你确认删除该节假日吗', function(){ 
+			System.post(System.base_url+"/Admin/Admin/deleteHoliday",data,function (res){
+			alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>删除成功</b>");
+			},function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:red;text-align:center;'>删除有误</b>");
+			});
+		 }, function(){ alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>取消删除</b>");});
+	}
+	function updateHoliday(id,week,weekday){
+		$(".new-days input").removeAttr('checked');
+		$("#newWeek").val(week);
+		$("#newID").val(id);
+		console.log(weekday);
+		for(var i in weekday){
+			console.log(weekday[i]-1);
+			$(".new-days input").eq(weekday[i]-1).attr("checked",true);
+		}
+	}
+	$(function (){
+		System.get(System.base_url+"/Admin/Admin/showHoliday",null,function (res){
+			var arr=['星期一','星期二','星期三','星期四','星期五','星期六','星期日'];
+			var holidayList="<table class='table index-table'><th>周数</th><th>星期</th><th>操作</th>";
+			for(var i=0;i<res.data.length;i++){
+				holidayList+="<tr>";
+				holidayList+="<td>"+res.data[i].week+"</td>";
+				holidayList+="<td><ul>";
+				for(var j=0;j<res.data[i].weekday.length;j++){
+					holidayList+="<li>"+arr[res.data[i].weekday[j]-1]+"</li>";
+				}
+				holidayList+="</ul></td>";
+				holidayList+="<td>";
+				var weekdays=JSON.stringify(res.data[i].weekday);
+				holidayList+="<button class='btn btn-default' onclick='updateHoliday("+res.data[i].id+","+res.data[i].week+","+weekdays+")' data-toggle='modal' data-target='#updateHolidays' >修改</button>";
+				holidayList+="<button class='btn btn-danger' onclick='deleteHoliday("+res.data[i].id+")' >删除</button>";
+				holidayList+="</td>";
+				holidayList+="</tr>";
+			}
+			holidayList+="</table>";
+			$(".holiday-manger").append(holidayList);
+		},function (res){
+			console.log(res);
+
+		});
+		$("#holiday-sub").on("click",function (){
+			var arr=[];
+			$(".weeklist input:checked").each(function (i, n) {
+			    arr.push(n.value);
+			});
+			arr=JSON.stringify(arr);
+			console.log(arr);
+			var data={
+				"week":$("#weekmanger").val(),
+				"weekday":arr
+			};
+			console.log(data);
+			System.post(System.base_url+"/Admin/Admin/addHoliday",data,function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>添加成功</b>");
+			},function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:red;text-align:center;'>添加失败</b>");
+			});
+		});
+		$("#newholiday-sub").on("click",function (){
+			var arr=[];
+			$(".new-days input:checked").each(function (i, n) {
+			    arr.push(n.value);
+			});
+			arr=JSON.stringify(arr);
+			var data={
+				"id":$("#newID").val(),
+				"week":$("#newWeek").val(),
+				"weekday":arr
+			};
+			System.post(System.base_url+"/Admin/Admin/updateHoliday",data,function (){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>修改成功</b>");
+			},function (res){
+				$(".new-error-info").html(res.msg);
+			});
+		});
+	});
+</script>

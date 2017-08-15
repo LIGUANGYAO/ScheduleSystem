@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>导出考试安排表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/common.css">
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+  		body{
+  			padding-bottom: 30px;
+  		}
+  		
+  		.header-tit{
+  			margin-top: 30px;
+  		}
+  		#searchForm{
+  			margin-top: 20px;
+  		}
+  		.btn-ouputExam{
+  			margin:20px auto;
+  			width:30%;
+  			display: block;
+  		}
+  	</style>
+</head>
+<body>
+	<div id="header"></div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-9">
+			<div class="header-tit">
+				<h3 class="text-warning">导出考试安排表</h3>
+			</div>
+			<form role="form" class="form-horizontal" id="searchForm">
+		  		<div class="form-group">
+		  			<label for="class_name" class="col-sm-3 control-label">班级名称：</label>
+    				<div class="col-sm-8">
+    					<input type="text" class="form-control" id="class_name" 
+    					name="class_name">
+    				</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="open_class_academy" class="col-sm-3 control-label">开课学院名称：</label>
+		  			<div class="col-sm-8">
+		  				<input type="text" name="open_class_academy" class="form-control" id="open_class_academy">
+		  			</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="have_class_academy" class="col-sm-3 control-label">上课学院名称：</label>
+		  			<div class="col-sm-8">
+		  				<input type="text" name="have_class_academy" class="form-control" id="have_class_academy">
+		  			</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="teacher" class="col-sm-3 control-label">教师姓名：</label>
+		  			<div class="col-sm-8">
+		  				<input type="text" name="teacher" class="form-control" id="teacher">
+		  			</div>
+		  		</div>
+		  		<div class="form-group">
+		  			 <label for="" class="col-sm-3 control-label text-right">请选择考试周数(必填)：</label>
+                    <div class="col-sm-8">
+                      <select name="week" id="week" class="form-control">
+                      	<option value="13">13周</option>
+                      	<option value="19">19周</option>
+                      </select>
+                    </div>
+		  		</div>
+		  		<div class="form-group">
+		  			<button type="button" class="btn btn-success btn-ouputExam">导出</button>
+		  		</div>
+		  		<div class="error-info"></div>
+		  	</form>
+		  	<div class="table-list"></div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	$(function (){
+		$(".btn-ouputExam").on("click",function (){
+			var str="";
+			if($("#class_name").val()){
+				str+="&class_name="+$("#class_name").val();
+			}
+			if($("#open_class_academy").val()){
+				str+="&open_class_academy="+$("#open_class_academy").val();
+			}
+			if($("#have_class_academy").val()){
+				str+="&have_class_academy="+$("#have_class_academy").val();
+			}
+			if($("#teacher_name").val()){
+				str+="&teacher_name="+$("#teacher_name").val();
+			}
+			window.open(System.base_url+"/Admin/Exam/outputExamExcel?week="+$("#week").val());
+		});
+
+		if($.cookie("admin_level")==1){
+				$("#searchForm .form-group").each(function (){
+					if($(this).index()<=2){
+						$(this).css("display","none");
+					}
+				});
+				$("#teacher").val($.cookie("name"));
+		}
+	});
+</script>

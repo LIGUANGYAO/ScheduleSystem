@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>导入excel表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/uploadExcel.css">
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+</head>
+<body>
+	<div id="header"></div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-8">
+			<div class="uploadExcel">
+
+				<h3>导入excel表</h3>
+                <!--这里可用教室基本不变-->
+				<!--<div class="classExcel excel">
+					<span class="text-warning text-tit">导入可用教室表</span>
+					<a href="javascript:void(0);" class="btn_addPic btn-class"><span><em>+</em>添加文件</span><input type="file" tabindex="3"  size="3" name="pic" class="filePrew" id="fileClass"></a>
+					<span id="class-warning">请选择要添加的文件</span>
+					<button class="btn btn-success uploadClass">点击导入</button>
+				</div>-->
+				<div class="a-b-class excel">
+					<span class="text-warning text-tit">导入非村官班课程表</span>
+					<a href="javascript:void(0);" class="btn_addPic btn-a-b"><span><em>+</em>添加文件</span><input type="file" tabindex="3"  size="3" name="pic" class="filePrew" id="fileAB"></a>
+					<span id="a-b-warning">请选择要添加的文件</span>
+					<button class="btn btn-success uploadAB">点击导入</button>
+				</div>
+				<div class="other-class excel">
+					<span class="text-warning text-tit">导入村官班课程表</span>
+					<a href="javascript:void(0);" class="btn_addPic btn-other"><span><em>+</em>添加文件</span><input type="file" tabindex="3"  size="3" name="pic" class="filePrew" id="fileOther"></a>
+					<span id="other-warning">请选择要添加的文件</span>
+					<button class="btn btn-success uploadOther">点击导入</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	alertify.dialog('indexAlert',function factory(){
+	    return{
+	        build: function () {
+	            var header = '<span'+'style="vertical-align:middle;color:#e10000;">'+'</span> 学院管理';
+	            this.setHeader(header);
+	        },
+	        main:function(message){
+	            this.message = message;
+	        },
+	        setup:function(){
+	            return {
+	                buttons:[{text: "确定", key:27}],/*Esc*/
+	                focus: { element:0 }
+	            };
+	        },
+	        prepare: function(){
+	            this.setContent(this.message);
+	        },
+	        callback: function () {
+	            window.location.href="uploadExcel.html";
+	            return true;
+	        }
+	    };
+	});
+	function updateAcademy(id,name){
+		console.log(id+name);
+		$("#newname").val(name);
+		$("#newid").val(id);
+	}
+	
+	$(function (){
+
+		$(".uploadClass").on("click",function (){
+		    $.ajaxFileUpload({
+		        url: System.base_url+'/Admin/Admin/importClassroomTimeAvailable',
+		        type: 'POST',
+		        secureuri:false,
+		        fileElementId: 'fileClass',//input的id
+		        dataType: 'json',
+		        success: function (data, status) {
+		            if(data.status == 200){
+		               alertify.alert('导入课表', '导入成功');
+		            }else {
+		                alertify.alert('导入课表', '导入失败');
+		            }
+		        },
+		        error: function (data, status) {
+		           console.log(data);
+		        }
+		    });
+		});
+		$(".uploadAB").on("click",function (){
+		    $.ajaxFileUpload({
+		        url: System.base_url+'/Admin/Admin/importCourseExcel',
+		        type: 'POST',
+		        secureuri:false,
+		        fileElementId: 'fileAB',//input的id
+		        dataType: 'json',
+		        success: function (data, status) {
+		            if(data.status == 200){
+		               alertify.alert('导入课表', '导入成功');
+		            }else {
+
+		                alertify.alert('导入课表', '导入失败');
+		            }
+		        },
+		        error: function (data, status) {
+		           console.log(data);
+		        }
+		    });
+		});
+		$(".uploadOther").on("click",function (){
+		    $.ajaxFileUpload({
+		        url: System.base_url+'/Admin/Admin/importOfficialClassExcel',
+		        type: 'POST',
+		        secureuri:false,
+		        fileElementId: 'fileOther',//input的id
+		        dataType: 'json',
+		        success: function (data, status) {
+		            if(data.status == 200){
+		               alertify.alert('导入课表', '导入成功');
+		            }else {
+		                alertify.alert('导入课表', '导入失败');
+		            }
+		        },
+		        error: function (data, status) {
+		           console.log(data);
+		        }
+		    });
+		});
+		$(".btn-class").on("change","input[type='file'][id='fileClass']",function (){
+			var arr=$(this).val().split("\\");
+			var fileName=arr[arr.length-1];
+			if(!fileName){
+				$("#class-warning").text("请选择要添加的文件");
+			}else{
+				$("#class-warning").text("你添加了"+fileName);
+			}
+		});
+		$(".btn-a-b").on("change","input[type='file'][id='fileAB']",function (){
+			var arr=$(this).val().split("\\");
+			var fileName=arr[arr.length-1];
+			if(!fileName){
+				$("#a-b-warning").text("请选择要添加的文件");
+			}else{
+				$("#a-b-warning").text("你添加了"+fileName);
+			}
+		});
+		$(".btn-other").on("change","input[type='file'][id='fileOther']",function (){
+			var arr=$(this).val().split("\\");
+			var fileName=arr[arr.length-1];
+			if(!fileName){
+				$("#other-warning").text("请选择要添加的文件");
+			}else{
+				$("#other-warning").text("你添加了"+fileName);
+			}
+		});
+	});
+</script>

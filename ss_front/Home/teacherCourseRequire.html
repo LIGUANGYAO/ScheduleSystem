@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>排课要求</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1"/>
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="css/normalize.css"/>
+    <link rel="stylesheet" href="css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css"/>
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css"/>
+    <link rel="stylesheet" href="css/common.css">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script>
+    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            padding-bottom: 30px;
+        }
+
+        .show-content {
+            margin-top: 30px;
+        }
+
+        .header-tit {
+            margin-top: 30px;
+        }
+
+        #searchForm {
+            margin-top: 20px;
+        }
+
+        .btn-search {
+            margin: 20px auto;
+            width: 30%;
+            display: block;
+        }
+
+        td.inex-td {
+            width: 67px;
+        }
+    </style>
+</head>
+<body>
+<div id="header"></div>
+<div class="container">
+    <div id="side" class="col-sm-3"></div>
+    <div class="show-content col-sm-9">
+        <div class="table-list"></div>
+    </div>
+</div>
+<div class="modal fade" id="addInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabe2">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabe2">填写排课要求</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="" class="col-sm-5 control-label text-right">请选择考核方式：</label>
+                        <div class="col-sm-6">
+                            <select name="check_way" id="check_way" class="form-control">
+                                <option value="笔试">笔试</option>
+                                <option value="口试">口试</option>
+                                <option value="机试">机试</option>
+                                <option value="课程论文">课程论文</option>
+                                <option value="大作业">大作业</option>
+                                <option value="其它">其它</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">使用多媒体教学学时数:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="time_media" placeholder="请在此处填数字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label text-right">课内实验学时数:</label>
+                        <div class="col-sm-6">
+                            <input type="text" class="form-control" id="time_in_class" placeholder="请在此处填数字">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="hidden" value="" id="course_id">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-5 control-label">备注 （需要使用机房或专用教室的任课教师请自行联系相关管理部门，并在此处注明具体时间、地点）:</label>
+                        <div class="col-sm-6">
+                            <textarea name="require" id="require" cols="40" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="error-info"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="addSubmit">提交</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+<script type="text/javascript" src="js/System.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+    function add(id) {
+        $("#course_id").val(id);
+    }
+    function getData(page) {
+        var limit = 20;
+        var data = {
+            "teacher_name_for_teaching_task": $.cookie("name"),
+            "page": page,
+            "limit": limit
+        };
+
+        System.get(System.base_url + "/Home/Course/queryCourse", data, function (res) {
+            var len = res.data.course_data.length;
+            var list = "<table class='table table-bordered'><tr><td>班级</td><td>课程名称</td><td>学生人数</td><td>考核方式</td><td>总学时</td><td class='inex-td'>使用多媒体教学学时数</td><td class='inex-td'>课内实验学时数</td><td>备注</td><td>操作</td></tr>";
+            for (var i = 0; i < len; i++) {
+                list += "<tr>";
+                list += "<td>" + res.data.course_data[i].class_name + "</td>";
+                list += "<td>" + res.data.course_data[i].name + "</td>";
+                list += "<td>" + res.data.course_data[i].student_sum + "</td>";
+                list += "<td>" + (res.data.course_data[i].teacher_require_data ? res.data.course_data[i].teacher_require_data.check_way : '') + "</td>";
+                list += "<td>" + res.data.course_data[i].time_total + "</td>";
+                list += "<td>" + (res.data.course_data[i].teacher_require_data ? res.data.course_data[i].teacher_require_data.time_media : '') + "</td>";
+                list += "<td>" + (res.data.course_data[i].teacher_require_data ? res.data.course_data[i].teacher_require_data.time_in_class : '') + "</td>";
+                list += "<td>" + (res.data.course_data[i].teacher_require_data ? res.data.course_data[i].teacher_require_data.require : '') + "</td>";
+                list += "<td><button class='btn btn-primary' data-toggle='modal' data-target='#addInfo' onclick='add(" + res.data.course_data[i].id + ")'>填写排课信息</button></td>";
+                list += "</tr>";
+            }
+            list += "</table>";
+            $(".table-list").html(list);
+        }, function (res) {
+
+        });
+    }
+    $(function () {
+        getData(1);
+        $("#addSubmit").on("click", function () {
+            if (isNaN($("#time_media").val()) || isNaN($("#time_in_class").val())) {
+                alertify.alert('排课要求', '学时栏只能填数字');
+                return;
+            }
+            var data = {
+                "course_id": $("#course_id").val(),
+                "check_way": $("#check_way").val(),
+                "time_media": $("#time_media").val(),
+                "time_in_class": $("#time_in_class").val(),
+                "require": $("#require").val(),
+            };
+            System.post(System.base_url + "/Admin/SelectBook/teacherFillInCourseRequire", data, function (res) {
+                alertify.alert('排课要求', '填写成功', function () {
+                    window.location.reload();
+                });
+            }, function (res) {
+                alertify.alert('排课要求', res.msg);
+            });
+        });
+    });
+</script>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>安排考试</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/common.css">
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+  		body{
+  			padding-bottom: 30px;
+  		}
+  		.header-tit{
+  			margin-top: 30px;
+  		}
+  		.search{
+			margin-top:40px;
+  		}
+  		.arrange-form{
+			margin-top:40px;
+  		}
+  		.name-table{
+  			margin-top: 30px;
+  		}
+  		.auto-info,.clear-info,.name-info{
+  			text-align: center;
+  			color:red;
+  			font-size:22px;
+			margin-top: 20px;
+  		}
+  		.input-radio{
+  			vertical-align: top;
+  		}
+  		.name-table table td,.name-table table th{
+			vertical-align: middle !important;
+			text-align: center !important;
+		}
+  	</style>
+</head>
+<body>
+	<div id="header"></div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-8">
+			<div class="arrange">
+				<div class="header-tit">
+					<h3 class="text-danger">自动安排考试</h3>
+				</div>
+				<div class="arrange-form clearfix">
+					<form role="form" class="form-horizontal">
+						<label for="name" class="col-sm-2 control-label">周数选择：</label>
+						<div class="col-sm-5 auto-choose">
+							<div class="col-sm-6"><input type="radio" value="13" class="input-radio" name="arrweek">13周</div>
+							<div class="col-sm-6"><input type="radio" value="19" class="input-radio" name="arrweek">19周</div>		
+						</div>
+					</form>
+					<button class="btn btn-success auto-sub">提交</button>
+					<div class="auto-info"></div>
+				</div>
+			</div>
+			<div class="arrange">
+				<div class="header-tit">
+					<h3 class="text-danger">清空考试安排</h3>
+				</div>
+				<div class="arrange-form clearfix">
+					<form role="form" class="form-horizontal">
+						<label for="name" class="col-sm-2 control-label">周数选择：</label>
+						<div class="col-sm-5 clear-choose">
+							<div class="col-sm-6"><input type="radio" value="13" class="input-radio" name="clearweek">13周</div>
+							<div class="col-sm-6"><input type="radio" value="19" class="input-radio" name="clearweek">19周</div>		
+						</div>
+					</form>
+					<button class="btn btn-success clear-sub">提交</button>
+					<div class="clear-info"></div>
+				</div>
+			</div>
+			<div class="header-tit">
+				<h3 class="text-danger">标记课程为已考试</h3>
+			</div>
+			<div class="search mt">
+				<form role="form" class="form-horizontal">
+					<label for="name" class="col-sm-2 control-label">课程名称：</label>
+					<div class="col-sm-5">
+						<input type="text" class="form-control" id="name" 
+							   placeholder="请输入课程名称">
+					</div>
+				</form>
+				<button class="btn btn-success name-search">查找</button>
+				<button class="btn btn-primary" id="mark">显示已标记课程</button>
+				<div class="name-info mt"></div>
+				<div class="name-table"></div>
+		  		<div id="namePageList"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	alertify.dialog('indexAlert',function factory(){
+	    return{
+	        build: function () {
+	            var header = '<span'+'style="vertical-align:middle;color:#e10000;">'+'</span> 标记课程';
+	            this.setHeader(header);
+	        },
+	        main:function(message){
+	            this.message = message;
+	        },
+	        setup:function(){
+	            return {
+	                buttons:[{text: "确定", key:27}],/*Esc*/
+	                focus: { element:0 }
+	            };
+	        },
+	        prepare: function(){
+	            this.setContent(this.message);
+	        },
+	        callback: function () {
+	            return true;
+	        }
+	    };
+	});
+	function markCourse(_this,id){
+		var data={
+			"id":id
+		};
+		if($(_this).hasClass('btn-no')){
+			System.post(System.base_url+"/Admin/Exam/markCourseIsExamed",data,function (res){
+				alertify.alert('标记课程', '<b style="display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;">标记课程为已考试成功</b>');
+				$(_this).removeClass("btn-warning").removeClass('btn-no').addClass('btn-success').addClass('btn-yes');
+				$(_this).html("课程已考试");
+				console.log(res);
+			},function (res){
+
+			});
+		}else{
+			System.post(System.base_url+"/Admin/Exam/markCourseNotExamed",data,function (res){
+				alertify.alert('标记课程', '<b style="display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;">撤销标记成功</b>');
+				$(_this).removeClass("btn-success").removeClass('btn-yes').addClass('btn-warning').addClass('btn-no');
+				$(_this).html("课程未考试");
+				console.log(res);
+			},function (res){
+
+			});
+		}
+	}
+	function getData(page,dataJson){
+		var limit=8;
+		if(dataJson&&dataJson!=="null"){
+			dataJson=dataJson.split("&");
+			var data={};
+			for(var i=0;i<dataJson.length;i++){
+				data[dataJson[i].split("=")[0]]=dataJson[i].split("=")[1];
+			}
+		}else{
+			var data={
+				"name":$("#name").val()
+			};
+		}
+		data.limit=limit;
+		data.page=page;
+		System.get(System.base_url+"/Home/Course/queryCourse",data,function (res){
+			var total_page=Math.ceil(res.data.sum/limit);
+			var rows=res.data.course_data;
+			var nameList="<table class='table table-bordered'><tr><th>班级名称</th><th>课程代号</th><th>课程名称</th><th>任课教师</th><th>操作</th></tr>";
+			for(var i=0;i<rows.length;i++){
+				nameList+="<tr>";
+				nameList+="<td>"+res.data.course_data[i].class_name+"</td>";
+				nameList+="<td>"+res.data.course_data[i].code+"</td>";
+				nameList+="<td>"+res.data.course_data[i].name+"</td>";
+				nameList+="<td>"+res.data.course_data[i].teacher+"</td>";
+				if(res.data.course_data[i].exam_status=='1'||res.data.course_data[i].exam_status=='4'){
+					nameList+="<td><button class='btn btn-warning btn-no' onclick='markCourse(this,"+res.data.course_data[i].id+")'>课程未考试</button></td>";
+				}else{
+					nameList+="<td><button class='btn btn-success btn-yes' onclick='markCourse(this,"+res.data.course_data[i].id+")'>课程已考试</button></td>";
+				}
+				nameList+="</td>";
+				nameList+="</tr>";
+			}
+			nameList+="</table>";
+			$(".name-table").html(nameList);
+			makeNavigation(page,total_page, 'getData', 'namePageList', 2,data);
+		},function (res){
+			$(".name-info").html("<span class='text-tit text-center'>未查询到信息</sapn>");
+		});
+	}
+	$(function (){
+		$(".auto-sub").on("click",function (){
+			var data={
+				"week":$(".auto-choose input:checked").val()
+			};
+			var _this=$(this);
+			alertify.confirm('自动安排考试', '是否自动安排考试?', function(){ 
+				_this.addClass("disabled").text("安排中");
+				System.post(System.base_url+"/Admin/Exam/automaticArrangeExam",data,function (res){
+					_this.removeClass('disabled').text('提交');
+					alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>自动安排考试成功</b>");
+				},function (res){
+					_this.removeClass('disabled').text('提交');
+					alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>"+res.msg+"</b>");
+				});
+			 }, function(){ });
+		});
+		$(".clear-sub").on("click",function (){
+			var data={
+				"week":$(".clear-choose input:checked").val()
+			};
+			var _this=$(this);
+			alertify.confirm('清空考试安排', '是否清空考试安排?', function(){ 
+			_this.addClass("disabled").text("清空中");
+			System.post(System.base_url+"/Admin/Exam/clearExamArrangeData",data,function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>清空考试安排成功</b>");
+				_this.removeClass('disabled').text('提交');
+			},function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>"+res.msg+"</b>");
+				_this.removeClass('disabled').text('提交');
+			});
+		 }, function(){ });
+		});
+		$(".name-search").on("click",function (){
+			$(".name-info").html("");
+			$(".name-table").html("");
+			$("#namePageList").html("");
+			getData(1);
+		});
+		var flag=true;
+		$("#mark").on("click",function (){
+			$(".name-info").html("");
+			$(".name-table").html("");
+			$("#namePageList").html("");
+			var _this=this;
+			if(flag){
+				System.get(System.base_url+"/Admin/Exam/showMarkExamedCourse",null,function (res){
+				var rows=res.data;
+				var nameList="<table class='table table-bordered'><tr><th>班级名称</th><th>课程代号</th><th>课程名称</th><th>任课教师</th><th>操作</th></tr>";
+				for(var i=0;i<rows.length;i++){
+					nameList+="<tr>";
+					nameList+="<td>"+res.data[i].class_name+"</td>";
+					nameList+="<td>"+res.data[i].code+"</td>";
+					nameList+="<td>"+res.data[i].name+"</td>";
+					nameList+="<td>"+res.data[i].teacher+"</td>";	
+					nameList+="<td><button class='btn btn-success btn-yes' onclick='markCourse(this,"+res.data[i].id+")'>课程已考试</button></td>";
+					nameList+="</td>";
+					nameList+="</tr>";
+				}
+				nameList+="</table>";
+				$(".name-table").html(nameList);
+				$(_this).text("收起已标记课程");
+			},function (res){
+
+			});
+				flag=!flag;
+			}else{
+				flag=!flag;
+				$(_this).text("显示已标记课程");
+			}
+			
+		});
+	});
+</script>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>填写监考教师</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+	<style>
+		body{
+			padding-bottom: 30px;
+		}
+		.header-tit{
+  			margin-top: 30px;
+  		}
+  		.classroom-form{
+			margin-top:40px;
+  		}
+	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-9">
+			<div class="classroom">
+				<div class="header-tit">
+					<h3 class="text-info"></h3>
+				</div>
+				<div class="classroom-form clearfix">
+					<form role="form" class="form-horizontal clearfix">
+				  		<div class="form-group">
+				  			<label for="name" class="col-sm-2 control-label"></label>
+							<div class="col-sm-4 choose-week">
+								<div class="col-sm-6"><input type="radio" value="1" class="input-radio" name="other_query" checked>未安排</div>
+								<div class="col-sm-6"><input type="radio" value="2" class="input-radio" name="other_query">已安排</div>		
+							</div>
+							<div class="col-sm-6">
+								<span class=''>排序:</span>
+								<button type="button" class="btn btn-info btn-teacher">教师</button>
+								<button type="button" class="btn btn-info btn-class">班级</button>
+								<button type="button" class="btn btn-info btn-course">课程</button>
+							</div>
+				  		</div>
+					</form>
+					<div class="error-info"></div>
+				</div>
+			</div>
+			<div class="table-list"></div>
+		  	<div id="pagelist"></div>
+		  	<div class="">
+		  		<button class="btn btn-danger display-none"  id="cancel" style="display: none">取消安排</button>
+		  		<button class="btn btn-primary" data-toggle="modal" data-target="#arrangeTeacher" id="arrange">安排教师</button>
+		  		<div class="modal fade" id="arrangeTeacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		          <div class="modal-dialog" role="document">
+		            <div class="modal-content">
+		              <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		                <h4 class="modal-title">安排教师</h4>
+		              </div>
+		              <div class="modal-body">
+		                <form class="form-horizontal" id="" enctype="multipart/form-data">
+		                	<div class="form-group" style="display: none;">
+		                      	<input type="text" id="course_ids">
+		                    </div>
+		                	<div class="teacher-list">
+		                		<div class="teacher-info">
+				                    <div class="form-group">
+				                       <label  class="col-sm-3 control-label">教师姓名：</label>
+				                        <div class="col-sm-7">
+				                          <input type="text" class="form-control name"  placeholder="教师姓名">
+				                        </div>
+				                        <div class="col-sm-2">
+											<button class="btn btn-danger delete" type="button">删除</button>
+				                        </div>
+				                    </div>
+				                     <div class="form-group">
+				                       <label  class="col-sm-3 control-label">教师职称：</label>
+				                        <div class="col-sm-7">
+				                          <input type="text" class="form-control position" placeholder="教师职称">
+				                        </div>
+				                    </div>
+			                   </div>
+		                    </div>
+		                    <div class="form-group">
+		                      	<div class="col-sm-11">
+		                      		<button type="button" class="pull-right btn btn-success" id="addTeacher">添加教师</button>
+		                      	</div>
+		                    </div>
+		                    <div class="form-group">
+		                    	<p class="return-info"></p>
+		                    </div>
+		                    <div class="modal-footer">
+		                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+		                        <button type="button" class="btn btn-primary" id="subTeacher">提交</button>
+		                    </div>
+		                </form>
+		              </div>
+		              
+		            </div>
+		          </div>
+ 				</div>
+		  	</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+		function getData(page,dataJson){
+			$(".table-list").html("");
+			var limit=10000;
+			if(dataJson&&dataJson!=="null"){
+				dataJson=dataJson.split("&");
+				var data={};
+				for(var i=0;i<dataJson.length;i++){
+					data[dataJson[i].split("=")[0]]=dataJson[i].split("=")[1];
+				}
+			}else{
+				var data={};
+			    if($("#class_name").val()){
+			    	data.class_name=$("#class_name").val();
+			    }
+			    if($("#academy").val()){
+			    	data.academy=$("#academy").val();
+			    }
+			    if($("#name").val()){
+			    	data.name=$("#name").val();
+			    }
+			    if($("#code").val()){
+			    	data.code=$("#code").val();
+			    }
+			    if($("#teacher").val()){
+			    	data.teacher=$("#teacher").val();
+			    }
+			}
+			data.limit=limit;
+			data.page=page;
+			data.open_class_academy_id = $.cookie("academy_id");
+			System.get(System.base_url+"/Home/Course/queryCourse",data,function (res){
+				var total_page=Math.ceil(res.data.sum/limit);
+				var rows=res.data.course_data.length;
+				console.log(res);
+				var classList="<table border=1 class='table table-bordered'><tr><th>选择</th><th>上课院系</th><th>班级名称</th><th>课程代号</th><th>课程名称</th><th>考核方式</th><th>总学时</th><th>理论学时</th><th>实践学时</th><th>任课教师</th>";
+				if($(".choose-week input[type='radio']:checked").val()==2){
+					classList+="<th>合班情况</th>";
+				}
+				classList+="</tr>";
+				for(var i=0;i<rows;i++){
+					classList+="<tr>";
+					if($(".choose-week input[type='radio']:checked").val()==2){
+						classList+="<td><input type='radio' name='arrInfo' id='"+res.data.course_data[i].id+"' /></td>";
+					}else{
+						classList+="<td><input type='checkbox' id='"+res.data.course_data[i].id+"' /></td>";
+					}
+					classList+="<td>"+res.data.course_data[i].academy+"</td>";
+					classList+="<td>"+res.data.course_data[i].class_name+"</td>";
+					classList+="<td>"+res.data.course_data[i].code+"</td>";
+					classList+="<td>"+res.data.course_data[i].name+"</td>";
+					classList+="<td>"+res.data.course_data[i].examine_way+"</td>";
+					classList+="<td>"+res.data.course_data[i].time_total+"</td>";
+					classList+="<td>"+res.data.course_data[i].time_theory+"</td>";
+					classList+="<td>"+res.data.course_data[i].time_practice+"</td>";
+					classList+="<td>"+res.data.course_data[i].teacher+"</td>";
+					if($(".choose-week input[type='radio']:checked").val()==2){
+						classList+="<td>";
+						 for(var j=0;j<res.data.course_data[i].combine_status.split("/").length;j++){
+						 	classList+="<div class='text-center'>"+res.data.course_data[i].combine_status.split("/")[j]+"</div><br>";
+						}
+						classList+="</td>";
+					
+					}
+					classList+="</tr>";
+				}
+				classList+="</table>";
+				$(".table-list").html(classList);
+				$(".choose-week input[type='radio']").attr("disabled",false);
+			},function (res){
+				$(".table-list").html("<span class='text-tit text-center'>未查询到信息</sapn>");
+				$(".choose-week input[type='radio']").attr("disabled",false);
+
+			});
+		}
+		$(function (){
+
+			/*var data={
+				"open_class_academy_id":$.cookie("academy_id")
+			};
+			System.post(System.base_url+"/Admin/Exam/showExam",data,function (res){
+				console.log(res);
+			},function (res){
+
+			});*/
+		$(".choose-week input[type='radio']").on("change",function (){
+			$(".choose-week input[type='radio']").attr("disabled",true);
+			$(".btn-course").trigger("click");
+			if($(".choose-week input[type='radio']:checked").val()==2){
+				$("#cancel").css('display',"block");
+				$("#arrange").css('display',"none");
+			}else{
+				$("#arrange").css('display',"block");
+				$("#cancel").css('display',"none");
+			}
+		});
+		$(".btn-teacher").on("click",function (){
+			getData(1,"order=teacher_id&limit=10&other_query="+$(".choose-week input[type='radio']:checked").val());
+		});
+		$(".btn-class").on("click",function (){
+			getData(1,"order=class_id&limit=10&other_query="+$(".choose-week input[type='radio']:checked").val());
+		});
+		$(".btn-course").on("click",function (){
+			getData(1,"order=name&limit=10&other_query="+$(".choose-week input[type='radio']:checked").val());
+		});
+		$(".btn-course").trigger("click");
+		$("#addTeacher").on("click",function (){
+			$(".teacher-list").append('<div class="teacher-info"><div class="form-group"><label  class="col-sm-3 control-label">教师姓名：</label><div class="col-sm-7"><input  type="text" class="form-control name"  placeholder="教师姓名"></div><div class="col-sm-2"><button class="btn btn-danger delete" type="button">删除</button></div></div><div class="form-group"><label  class="col-sm-3 control-label">教师职称：</label><div class="col-sm-7"><input type="text" class="form-control position" placeholder="教师职称"></div></div></div>');
+		});
+		var arr=[];
+		$("#arrange").on("click",function (){
+			$(".table-list input[type='checkbox']:checked").each(function (i,o){
+				arr.push($(o).attr('id'));
+			});
+		});
+		var teacherArr=[];
+		$("#subTeacher").on("click",function (){
+			$(".teacher-info").each(function (){
+				teacherArr.push({
+					name:$(this).find(".name").val(),
+					position:$(this).find(".position").val()
+				});
+			});
+			var data={
+				teacher:JSON.stringify(teacherArr),
+				course_ids:JSON.stringify(arr)
+			};
+			console.log(data);
+			System.post(System.base_url+"/Admin/SelectBook/academyAdminArrangeCombineClass",data,function (res){
+				alertify.alert('安排教师', '安排成功', function (){
+                    window.location.reload();
+                });
+			},function (res){
+				alertify.alert('发生错误', res.msg);
+			});
+			teacherArr=[];
+		});
+		$("#cancel").on("click",function (){
+			var data={
+				"id":$(".table-list tr").find('input[type="radio"]:checked').attr("id")
+			};
+			System.post(System.base_url+"/Admin/SelectBook/academyAdminCancelCombineClass",data,function (res){
+				alertify.alert('取消安排', '取消成功', function (){
+                    window.location.reload();
+                });
+			},function (res){
+				alertify.alert('发生错误', res.msg);
+			});
+		});
+		$(".teacher-list").on("click",'.delete',function (){
+			$(this).parents('.teacher-info').remove();
+		});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+body{
+	font-family: "微软雅黑";
+	padding-bottom: 30px;
+}
+a{
+	cursor: pointer;
+}
+.header{
+	width:100%;
+}
+.header h3{
+	text-indent: 2em;
+}
+.container{
+	padding-bottom:50px;
+}
+ul,li{
+	padding:0;
+	margin:0;
+	list-style: none;
+}
+.side{
+	width:16%;
+	float:left;
+}
+.side a{
+	height:34px;
+	line-height: 30px;
+}
+.active{
+	color:red;
+}
+.main{
+	width:84%;
+	float:right;
+}
+.nav-title .text-index{
+	font-size:16px;
+	color:red;
+}
+.submit-btn{
+	width:36%;
+	margin:auto;
+}
+/*.table-index{
+	margin-top:30px;
+}
+.table-index td,th{
+	vertical-align:middle;
+	padding:4px 8px;
+	word-break:break-all;
+	text-align: center;
+}
+.table-index td span{
+	word-break:break-all;
+}
+.table-index td>a{
+	color:#000;
+}
+.text-tit{
+	margin-top:30px;
+	display: block;
+	color:red;
+	font-weight: bold;
+	font-size:1.4em;
+}
+td.big-td{
+	margin: 0px !important;
+	padding: 0px !important;
+}
+td.big-td table{
+	width:100%;
+	height:100%;
+}
+td.big-td table tr + tr{
+	border-top:1px solid #000 !important;
+}*/
+.table-index{
+	margin-top:30px;
+}
+.table-index td,th{
+	vertical-align:middle;
+	padding:5px 10px;
+	word-break:break-all;
+	text-align: center;
+}
+.table-index td span{
+	word-break:break-all;
+	display:block;
+}
+.table-index td>a{
+	color:#000;
+}
+.admin-tit h3{
+	line-height:60px;
+}
+.admin-info{
+	text-align: center;
+}
+.admin-info h3{
+	font-weight: bold;
+	font-size:16px;
+}
+.function li{
+	line-height: 30px;
+}
+.error-info{
+	text-align: center;
+	color:red;
+}
+td.big-td{
+	margin: 0px !important;
+	padding: 0px !important;
+}
+td.big-td table tr td + td{
+	border-left:1px solid #000;
+}
+td.big-td table tr +tr{
+	border-top:1px solid #000;
+}

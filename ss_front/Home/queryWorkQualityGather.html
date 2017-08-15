@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>查询工作量</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+		.search-info{
+			margin-top: 40px;
+			margin-left: 40px;
+		}
+		.search{
+			margin-top: 30px;
+		}
+		.return-info{
+			margin-top: 60px;
+		}
+		table{table-layout: fixed;}td{word-break: break-all; word-wrap:break-word;}
+  	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-8 search-info">
+			<div class="title">
+				<h3 class="text-info">查询工作量</h3>
+				<div class="search">
+					<form role="form" class="form-horizontal" id="Adminform">
+				  		<div class="form-group">
+				  			<label for="teacher_name" class="col-sm-2 control-label">教师名称</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" id="teacher_name" 
+								name="teacher_name">
+							</div>
+				  		</div>
+				  		<div class="form-group">
+				  			<label for="code" class="col-sm-2 control-label">学院名称</label>
+				  			<div class="col-sm-8">
+				  				<input type="text" class="form-control" id="academy_name" 
+								name="academy_name">
+	                        </div>
+				  		</div>
+				  	</form>
+				</div>
+			</div>
+			<div class="submit-search col-sm-3 pull-right">
+				<button class="btn btn-success" id="search-btn">查找</button>
+			</div>
+			<div class="return-info">
+				<p class="error-info"></p>
+			</div>
+			<div class="pagelist">
+				
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+	$(function (){
+		$("#academy_name").val($.cookie('academy_name'));
+		$("#search-btn").on("click",function (){
+			$(".error-info").html("");
+			var data={};
+			if($("#teacher_name").val()){
+				data.teacher_name=$("#teacher_name").val();
+			}
+			if($.cookie("academy_id")){
+				data.academy_id=$.cookie("academy_id");
+			}
+			console.log(data);
+			System.get(System.base_url+"/Admin/OtherThing/queryWorkQualityGather",data,function (res){
+				if(res.data.length>0){
+					var list="<table class='table table-bordered'><tr><td>上课院系</td><td>班级开课院系</td><td>人数</td><td>论文人数(本)</td><td>论文人数(专)</td><td>学期</td><td>课程名称</td><td>考核方式</td><td>总学时</td><td>理论</td><td>实践</td><td>任课教师</td><td>教师职称</td><td>备注</td><td>工作量（刚性）</td><td>刚性总数</td><td>时间</td></tr>";
+					var length=res.data.length;
+					for(var i=0;i<length;i++){
+						list+="<tr>";
+						list+="<td>"+res.data[i].academy+"</td>";
+						list+="<td>"+res.data[i].class+"</td>";
+						list+="<td>"+res.data[i].student_sum+"</td>";
+						list+="<td>"+res.data[i].paper_undergraduate+"</td>";
+						list+="<td>"+res.data[i].paper_special+"</td>";
+						list+="<td>"+res.data[i].semester+"</td>";
+						list+="<td>"+res.data[i].name+"</td>";
+						list+="<td>"+res.data[i].examine_way+"</td>";
+						list+="<td>"+res.data[i].time_total+"</td>";
+						list+="<td>"+res.data[i].time_theory+"</td>";
+						list+="<td>"+res.data[i].time_practice+"</td>";
+						list+="<td>"+res.data[i].teacher_name+"</td>";
+						list+="<td>"+res.data[i].teacher_position+"</td>";
+						list+="<td>"+res.data[i].comment+"</td>";
+						list+="<td>"+res.data[i].work_quality+"</td>";
+						list+="<td>"+res.data[i].work_quality_sum+"</td>";
+						list+="<td>"+res.data[i].time+"</td>";
+						list+="</tr>";
+					}
+					list+="</table>";
+					$(".pagelist").html(list);
+				}else{
+					$(".error-info").html("未查到信息");
+				}
+			},function (res){
+				alertify.alert('查询工作量', res.msg);
+			});
+		});
+
+
+		if($.cookie("admin_level")==1){
+			
+			$(".form-group").eq(1).css("display","none");
+
+			$("#teacher_name").val($.cookie("name"));
+		}
+
+		
+	});
+	</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+.show-content
+{
+	margin-top:20px;
+	padding:20px 40px;
+	padding-bottom:30px;
+}
+.add-acadmy{
+	padding:20px;
+}
+.add-acadmy button.btn-add{
+	margin-bottom: 20px;
+}
+.table-acadmy{
+	float: right;
+}
+.table-index td{
+	width:200px;
+	height:50px;
+	text-align:center;
+}
+.mr{
+	margin-right:10px;
+}
+	

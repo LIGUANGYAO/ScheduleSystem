@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>学院教务员/教师登录</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/teacherLogin.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+</head>
+<body>
+	<div class="container">
+		<div class="row login-window">
+		  <div class="title">
+		  	<h3 class="text-info">学院教务员/教师登录系统</h3>
+		  </div>
+		  <div class="content">
+		  	<div class="choose-login">
+		  		<ul class="clearfix">
+		  			<li class="col-sm-6">学院教务员</li>
+		  			<li class="col-sm-6 active">教师</li>
+		  		</ul>
+		  	</div>
+		  	<div class="login-form">
+		  		<form role="form" class="form-horizontal" id="Adminform">
+		  		<div class="form-group">
+		  			<label for="AdminCount" class="col-sm-3 control-label">教务员账号</label>
+    				<div class="col-sm-8">
+    					<input type="text" value="006100999" class="form-control" id="AdminCount" placeholder="请输入账号"
+    					name="account">
+    				</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="password" class="col-sm-3 control-label">教务员密码</label>
+		  			<div class="col-sm-8">
+		  				<input type="password" value="1234567" name="password" class="form-control" id="Adminpassword" placeholder="请输入密码">
+		  			</div>
+		  		</div>
+		  		<div class="row row-function">
+			  		<div class="col-sm-6 text-center">初始密码为123456</div>
+			  		<div class="col-sm-6 text-center">
+			  			<a href="forgetPasswordSendEmail.html?type=2" class="text-danger">忘记密码?</a>
+			  			||
+			  			<a href="http://jwc.wyu.edu.cn/teacher/tid.asp?id=13&name=%D5%FE%B7%A8%D1%A7%D4%BA" class="text-danger" target="_blank">查询账号?</a>
+			  		</div>
+		  		</div> 
+		  		<p id="admin-error-info" class="admin-error"></p>
+		  	</form>
+		  	<div class="con-footer">
+		  		<button class="btn btn-success sublogin" id="loginAdministrator">点击登陆</button>
+		  	</div>	  	
+		  	</div>
+		  	<div class="dp login-form">
+		  		<form role="form" class="form-horizontal" id="teacherform">
+		  		<div class="form-group">
+		  			<label for="teachCount" class="col-sm-3 control-label">教师账号</label>
+    				<div class="col-sm-8">
+    					<input type="text" class="form-control" id="teachCount" value="006000076" placeholder="请输入账号"
+    					name="username">
+    				</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="password" class="col-sm-3 control-label">教师密码</label>
+		  			<div class="col-sm-8">
+		  				<input type="password" value="1234567" name="password" class="form-control" id="teachpassword" placeholder="请输入密码">
+		  			</div>
+		  		</div>
+		  		<div class="row row-function">
+			  		<div class="col-sm-6 text-center">初始密码为123456</div>
+			  		<div class="col-sm-6 text-center">
+			  			<a href="forgetPasswordSendEmail.html?type=1" class="text-danger">忘记密码?</a> ||
+			  			<a href="http://jwc.wyu.edu.cn/teacher/tid.asp?id=13&name=%D5%FE%B7%A8%D1%A7%D4%BA" class="text-danger" target="_blank">查询账号?</a>
+			  		</div>
+		  		</div> 
+		  		<p id="teach-error-info" class="teach-error"></p>
+		  	</form>
+		  	<div class="con-footer">
+		  		<button class="btn btn-success sublogin" id="loginTeacher">提交登陆</button>
+		  	</div>	  	
+		  	</div>
+		  </div>
+		</div>
+	</div>
+	<div class="footer">
+		<p>Copyright @ 2016 袂卓工作室 All rights reserved.</p>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	alertify.dialog('myAlert',function factory(){
+	    return{
+	        build: function () {
+	            var header = '<span '+'style="vertical-align:middle;color:#e10000;">'+ '</span> 教师登陆';
+	            this.setHeader(header);
+	        },
+	        main:function(message){
+	            this.message = message;
+	        },
+	        setup:function(){
+	            return {
+	                buttons:[{text: "确定", key:27/*Esc*/}],
+	                focus: { element:0 }
+	            };
+	        },
+	        prepare: function(){
+	            this.setContent(this.message);
+	        },
+	        callback: function () {
+	        	if($.cookie("admin_level")==2){
+	        		window.location.href="academyManager.html";
+	        	}else{
+	        		window.location.href="teacher.html";
+	        	}
+	            return true;
+	        }
+	    };
+	});
+
+	$(function(){
+		var validate = $("#Adminform").validate({
+			debug:true,
+			rules:{
+				username:{
+					required:true
+				},
+				password:{
+					required:true
+				}
+			},
+			messages:{
+				username:{
+					required:"账号不能为空"
+				},
+				password:{
+					required:"密码不能为空"
+				}
+			},
+			errorPlacement:function (error,element){   //错误信息及其元素
+				error.appendTo("#error-info");     //#info必须放在form表单里面，错误信息合并
+				console.log(error);
+			}
+		});
+		$(".choose-login li").on("mouseover",function (){
+			$(".login-form").siblings(".login-form").addClass('dp');
+			$(".choose-login li").siblings(".choose-login li").addClass('active');
+			$(".login-form").eq($(this).index()).removeClass('dp');
+			$(this).removeClass('active');
+		});
+		//学院教务员登录
+		$("#loginAdministrator").on("click",function (){
+			var data={
+				"account":$("#AdminCount").val(),
+				"password":$("#Adminpassword").val(),
+				"admin_level":"2"
+			};
+			console.log(data);
+			if($("#AdminCount").val()==""||$("#Adminpassword").val()==""){
+				$(".admin-error").html("请完善信息");
+				$(".admin-error").fadeIn();
+				$(".admin-error").fadeOut(4000);
+				return;
+			}
+			$(".admin-error").html("");
+			$(".admin-error").fadeIn();
+			System.post(System.base_url+"/Admin/AdminBase/login",data,function (res){
+				$.cookie("admin_level",2,{
+                    path: "/"
+                });
+                $.cookie("academy_id",res.data.academy_id,{
+                    path: "/"
+                });
+                $.cookie("name",res.data.name,{
+                    path: "/"
+                });
+                $.cookie("academy_name",res.data.academy_name,{
+                    path: "/"
+                });
+				if(res.data.first_login=="1"){
+					alertify.prompt( '登录成功', '请绑定你的邮箱，便于找回密码', '', function(evt, value) { 
+						var data={
+							"email":value,
+							"admin_level":"2"
+						};
+						System.post(System.base_url+"/Admin/AdminBase/fillInEmail",data,function (res){
+							alertify.myAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>绑定成功</b>");
+						},function (res){
+							alert("绑定失败");
+							console.log(res);
+						});
+
+					 },function () {  });
+				}else{
+					alertify.myAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>登录成功</b>");
+				}
+			},function (res){
+				$(".admin-error").html("账号或密码有错");
+				$(".admin-error").fadeOut(4000);
+			});
+		});
+		//教师登陆
+		$("#loginTeacher").on("click",function (){
+			var data={
+				"account":$("#teachCount").val(),
+				"password":$("#teachpassword").val(),
+				"admin_level":"1"
+			};
+			console.log(data);
+			if($("#teachCount").val()==""||$("#teachpassword").val()==""){
+				$(".teach-error").html("请完善信息");
+				$(".teach-error").fadeIn();
+				$(".teach-error").fadeOut(4000);
+				return;
+			}
+			$(".teach-error").html("");
+			$(".teach-error").fadeIn();
+			System.post(System.base_url+"/Admin/AdminBase/login",data,function (res){
+				$.cookie("admin_level",1,{
+                    path: "/"
+                });
+                $.cookie("name",res.data.name,{
+                    path: "/"
+                });
+                console.log(res.data.name);
+				if(res.data.first_login=="1"){
+					alertify.prompt( '登录成功', '请绑定你的邮箱，便于找回密码', '', function(evt, value) { 
+						var data={
+							"email":value,
+							"admin_level":"1"
+						};
+						System.post(System.base_url+"/Admin/AdminBase/fillInEmail",data,function (res){
+							alertify.myAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>绑定成功</b>");
+						},function (res){
+							alert("绑定失败");
+							console.log(res);
+						});
+
+					 },function () {  });
+				}else{
+					alertify.myAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>登录成功</b>");
+				}
+			},function (res){
+				$(".teach-error").html("账号或密码有错");
+				$(".teach-error").fadeOut(4000);
+			});
+		});
+	});
+	
+</script>

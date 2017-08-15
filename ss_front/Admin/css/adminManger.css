@@ -1,0 +1,114 @@
+.content{
+	border:1px solid #ccc;
+	margin-left:20px;
+	margin-top:7%;
+}
+.admin-info{
+	text-align: center;
+}
+.admin-info h3{
+	font-weight: bold;
+	font-size:16px;
+}
+.function li{
+	line-height: 30px;
+}
+.error-info{
+	text-align: center;
+	color:red;
+}
+#accordion a{
+	line-height:26px;
+}
+.show-content
+{
+	margin-top:30px;
+	padding:0px 40px;
+	padding-bottom:30px;
+}
+.table-acadmy{
+	float: right;
+}
+.table-list{
+	margin-top: 30px;
+}
+.table-index td,th{
+	width:100px;
+	height:50px;
+	text-align:center;
+}
+.table-index button{
+	margin-left: 10px;
+}
+.mr{
+	margin-right:25px;
+	margin-left:-20px;
+}
+.add-Admin{
+	margin-bottom:10px;
+}
+.excel{
+	margin-top:30px;
+
+	padding-bottom:40px;
+}
+span.text-tit{
+	font-size:16px;
+	display: block;
+	line-height:28px;
+	margin-top:10px;
+	margin-bottom: 10px;
+}
+.excel button{
+	display: block;
+	margin-top: 10px;
+}
+.table-list{
+	margin-top: 30px;
+}
+#admin-warning{
+	line-height:40px;
+	font-size:20px;
+	display: inline-block;
+	text-indent:1em;
+}
+a{text-decoration:none;}
+.btn_addPic{
+display: inline-block;
+position: relative;
+height: 39px;
+overflow: hidden;
+padding: 0 30px;
+border: 1px solid #EBEBEB;
+background: none repeat scroll 0 0 #F3F3F3;
+color: #999999;
+font: 14px/39px 'MicroSoft Yahei','Simhei';
+cursor: pointer;
+text-align: center;
+}
+.btn_addPic em {
+background:url(../img/add_24px.png) 0 0;
+display: inline-block;
+width: 24px;
+height: 24px;
+overflow: hidden;
+margin: 10px 5px 10px 0;
+line-height: 20em;
+vertical-align: middle;
+}
+
+.filePrew {
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+width: 140px;
+height: 39px;
+cursor: pointer;
+opacity: 0;
+filter:alpha(opacity: 0);
+}
+.btn-search{
+	float:right;
+	margin-right:50px;
+}

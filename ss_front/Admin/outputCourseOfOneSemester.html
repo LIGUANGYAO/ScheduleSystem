@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>导出表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+		.control{
+			margin-top: 40px;
+			margin-left: 40px;
+		}
+		.title{
+			margin-bottom: 40px;
+		}
+		.control-course{
+			margin-top: 30px;
+		}
+		#semester{
+			margin-top: 40px;
+		}
+  	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-8 control">
+			<div class="title">
+				<h3 class="text-danger">导出课程表模板</h3>
+				<div class="control-course clearfix">
+					<div class="col-sm-4">
+						<input type="radio" name="course_type" value="1">非村官班
+					</div>
+					<div class="col-sm-4">
+						<input type="radio" name="course_type" value="2">村官班
+					</div>
+					<div class="col-sm-4">
+						<button class="btn btn-success" id="output">选择导出</button>
+					</div>
+				</div>
+			</div>
+			<div class="return-info">
+				<p class="error-info"></p>
+			</div>
+			<div class="title">
+				<h3 class="text-danger">导出一个学期的开课一览表</h3>
+				<button class="btn btn-success" id="semester">点击导出</button>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+	<script>
+		$(function (){
+			$("#output").on("click",function (){
+				alert($(".control-course input:checked").val());
+				window.open(System.base_url+"/Admin/SelectBook/outputCourseOfOneSemester?course_type="+$(".control-course input:checked").val());
+			});
+			$("#semester").on("click",function (){
+				window.open(System.base_url+"/Admin/SelectBook/outputSelectBookOfOneSemester");
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>学院管理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <link rel="stylesheet" href="jquery-ui-1.11.4/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/academyManage.css">
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+</head>
+<body>
+	<div id="header"></div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-8">
+			<h3 class="title">学院管理</h3>
+			<div class="add-acadmy clearfix">
+				<button class="btn btn-info btn-add pull-right" data-toggle="modal" data-target="#addAcadmy">添加</button>
+				<div class="modal fade" id="addAcadmy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			        <div class="modal-dialog" role="document">
+			            <div class="modal-content">
+			              <div class="modal-header">
+			                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			                <h4 class="modal-title" id="myModalLabel">添加学院</h4>
+			              </div>
+			              <div class="modal-body">
+			                <form class="form-horizontal" id="" enctype="multipart/form-data">
+			                    <div class="form-group">
+			                       <label for="name" class="col-sm-3 control-label">请输入学院名称：</label>
+			                        <div class="col-sm-8">
+			                          <input type="text" class="form-control" name="name" id="name" placeholder="请输入学院名称">
+			                        </div>
+			                    </div>
+			                    <div class="form-group">
+			                    	<p class="error-info"></p>
+			                    </div>
+			                    <div class="modal-footer">
+			                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+			                        <button type="button" class="btn btn-primary" id="acadmy-sub">提交</button>
+			                    </div>
+			                </form>
+			              </div>
+			              
+			            </div>
+			        </div>
+				</div>
+				<div class="table-acadmy"></div>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="updateAcademy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="myModalLabel">修改学院</h4>
+	          </div>
+	          <div class="modal-body">
+	            <form class="form-horizontal" id="" enctype="multipart/form-data">
+	                <div class="form-group">
+	                   <label for="newname" class="col-sm-3 control-label">请输入学院名称：</label>
+	                    <div class="col-sm-8">
+	                      <input type="text" class="form-control" name="newname" id="newname" >
+	                      <input type="hidden" id="newid">
+	                    </div>
+	                </div>
+	                <div class="form-group">
+	                	<p class="error-info"></p>
+	                </div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                    <button type="button" class="btn btn-primary" id="newname-sub">提交</button>
+	                </div>
+	            </form>
+	          </div>
+	          
+	        </div>
+	    </div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script src="js/common.js"></script>
+</body>
+</html>
+<script>
+	alertify.dialog('addAlert',function factory(){
+	    return{
+	        build: function () {
+	            var header = '<span'+'style="vertical-align:middle;color:#e10000;">'+'</span> 学院管理';
+	            this.setHeader(header);
+	        },
+	        main:function(message){
+	            this.message = message;
+	        },
+	        setup:function(){
+	            return {
+	                buttons:[{text: "确定", key:27}],/*Esc*/
+	                focus: { element:0 }
+	            };
+	        },
+	        prepare: function(){
+	            this.setContent(this.message);
+	        },
+	        callback: function () {
+	            window.location.href="academyManage.html";
+	            return true;
+	        }
+	    };
+	});
+	function updateAcademy(id,name){
+		$("#newname").val(name);
+		$("#newid").val(id);
+	}
+	function deleteAcademy(id){
+		var data={
+			"id":id
+		};
+		alertify.confirm('删除学院', '你确认删除该学院吗', function(){ 
+			System.post(System.base_url+"/Admin/Admin/deleteAcademy",data,function (res){
+			alertify.addAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>删除成功</b>");
+			},function (res){
+				alertify.addAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>删除有误</b>");
+			});
+		 }, function(){ alertify.addAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>取消删除</b>");});
+	}
+	$(function (){
+		System.get(System.base_url+"/Admin/Admin/showAcademy",null,function (res){
+			console.log(res);
+			var academy="<table border=1 class='table-index'>";
+			for(var i=0;i<res.data.length;i++){
+				academy+="<tr>";
+				academy+="<td>";
+				academy+=i+1;
+				academy+="</td>";
+				academy+="<td>";
+				academy+=res.data[i].name;
+				academy+="</td>";
+				academy+="<td>";
+				var academyname=""+res.data[i].name;
+				academy+="<button class='btn btn-default mr' onclick='updateAcademy("+res.data[i].id+",\""+res.data[i].name+"\")' data-toggle='modal' data-target='#updateAcademy'>修改</button><button class='btn btn-danger' onclick='deleteAcademy("+res.data[i].id+")'>删除</button>";
+				academy+="</td>";
+				academy+="</tr>";
+			}
+			academy+="</table>";
+			$(".table-acadmy").append(academy);
+		},function (res){
+			console.log(res);
+
+		});
+		$("#acadmy-sub").click(function(event) {
+			var data={
+				"name":$("#name").val()
+			};
+			System.post(System.base_url+"/Admin/Admin/addAcademy",data,function (res){
+				console.log(res);
+				alertify.addAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>添加成功</b>");
+			},function (res){
+				console.log(res);
+			});
+		});
+		$("#newname-sub").click(function(event) {
+			var data={
+				"id":$("#newid").val(),
+				"name":$("#newname").val()
+			};
+			System.post(System.base_url+"/Admin/Admin/updateAcademy",data,function (res){
+				alertify.addAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>修改成功</b>");
+			},function (res){
+				console.log(res);
+			});
+		});
+	});
+</script>

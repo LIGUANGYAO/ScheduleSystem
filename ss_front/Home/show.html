@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"> 
+	<title>展示</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="css/show.css">
+	<link rel="stylesheet" href="css/buttons.css">
+</head>
+<body>
+	<div class="container">
+		<div class="info">
+			<form role="form" class="form-horizontal">
+		  		<div class="form-group">
+		  			<label for="teachCount" class="col-sm-2 control-label">课程名称：</label>
+    				<div class="col-sm-3">
+    					<input class="form-control" id="disabledInput" type="text" placeholder="旅游管理" disabled>
+    				</div>
+    				<label for="password" class="col-sm-2 control-label">班级名称：</label>
+		  			<div class="col-sm-3">
+		  				<input class="form-control" id="disabledInput" type="text" placeholder="AY170303" disabled>
+		  			</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="password" class="col-sm-2 control-label">总时长：</label>
+		  			<div class="col-sm-3">
+		  				<input class="form-control" id="disabledInput" type="text" placeholder="20" disabled>
+		  			</div>
+		  			<label for="password" class="col-sm-2 control-label">总人数：</label>
+		  			<div class="col-sm-3">
+		  				<input class="form-control" id="disabledInput" type="text" placeholder="32" disabled>
+		  			</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="password" class="col-sm-2 control-label">排课要求：</label>
+		  			<div class="col-sm-8">
+		  				<input class="form-control" id="disabledInput" type="text" placeholder="1-8周周日上午" disabled>
+		  			</div>
+		  		</div>
+		  		<div class="form-group">
+		  			<label for="password" class="col-sm-2 control-label">不能排时间：</label>
+		  			<div class="col-sm-3">
+		  				<ul class="list-show">
+		  					<li>第5-19周星期二第1、2节</li>
+		  					<li>第5-13周星期四第3、4节</li>
+		  					<li>第1-16周星期三第3、4节</li>
+		  				</ul>
+		  			</div>
+		  			<label for="password" class="col-sm-2 control-label">合班情况：</label>
+		  			<div class="col-sm-3">
+		  				<ul class="list-show">
+		  					<li>BY150302(12)</li>
+		  					<li>BY150303(20)</li>
+		  				</ul>
+		  			</div>
+		  		</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-warning see-class">班级已选情况<span class="caret"></span></button></button>	
+		  		</div>
+		  		<div class="form-group all">
+					<table class="table table-bordered" id="classabout">
+						<thead>
+							<tr>
+								<th>课程名称</th>
+								<th>总学时</th>
+								<th>星期一晚上</th>
+								<th>星期二晚上</th>
+								<th>星期三晚上</th>
+								<th>星期四晚上</th>
+								<th>星期五晚上</th>
+								<th>星期六晚上</th>
+								<th>星期日上午</th>
+								<th>星期日下午</th>
+								<th>星期日晚上</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<th>比较文学专题</th>
+								<td>24</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>1-2,4,7-9周,四节(马兰芳教学楼301)</td>
+							</tr>
+							<tr>
+								<tr>
+									<th>文学理论专题</th>
+									<td>24</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td>10-15周, 四节(马兰芳教学楼301)</td>
+									<td></td>
+								</tr>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="form-group">
+					<a href="javascript:void(0);" class="button button-glow button-border button-rounded button-primary">马兰芳</a>
+					<a href="javascript:void(0);" class="button button-glow button-border button-rounded button-primary">北主楼</a>
+					<a href="javascript:void(0);" class="button button-glow button-border button-rounded button-primary">黄浩川</a>
+				</div>
+				<div class="form-group">
+					<table class="table table-bordered" >
+					<thead>
+						<tr>
+							<th>教室</th>
+							<th>星期一晚上</th>
+							<th>星期二晚上</th>
+							<th>星期三晚上</th>
+							<th>星期四晚上</th>
+							<th>星期五晚上</th>
+							<th>星期六晚上</th>
+							<th>星期日上午</th>
+							<th>星期日下午</th>
+							<th>星期日晚上</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th>101</th>
+							<td>1-9,11,18周</td>
+							<td></td>
+							<td>8-18周</td>
+							<td></td>
+							<td></td>
+							<td>1-9,11,18周</td>
+							<td></td>
+							<td>1-13周</td>
+							<td></td>
+						</tr>
+						<tr>
+							<tr>
+								<th>102</th>
+								<td>1-14周</td>
+								<td></td>
+								<td></td>
+								<td></td>
+								<td>1-17周</td>
+								<td></td>
+								<td>1-17周</td>
+								<td></td>
+								<td>1-12周</td>
+							</tr>
+						</tr>
+					</tbody>
+				</table>
+				</div>
+				<div class="choose-weeks">
+					<div class="choose-title">
+						<h3>时间选择</h3>
+					</div>
+					<div class="choose-content clearfix pb" id="choose-content">
+						<ul class="clearfix">
+							<li class="col-sm-2">连续周：</li>
+							<li class="col-sm-4">
+								开始周
+								<select class="select-choose">
+									<option value=""></option>
+									<option value="1">1</option>	
+									<option value="2">2</option>	
+									<option value="3">3</option>	
+									<option value="4">4</option>	
+									<option value="5">5</option>	
+									<option value="6">6</option>	
+								</select>
+							</li>
+							<li class="col-sm-4">
+								结束周
+								<select class="select-choose">
+									<option value=""></option>
+									<option value="1">1</option>	
+									<option value="2">2</option>	
+									<option value="3">3</option>	
+									<option value="4">4</option>	
+									<option value="5">5</option>	
+									<option value="6">6</option>	
+								</select>
+							</li>
+							<li>
+								<button type="button" class="btn btn-danger delete">删除</button>
+							</li>
+						</ul>
+					</div>
+					<div class="choose-footer">
+						<button type="button" class="btn btn-success addweeks">添加</button>
+					</div>
+				</div>
+				<div class="choose-weeks">
+					<div class="choose-title">
+						<h3>时间选择(单周)</h3>
+					</div>
+					<div class="choose-content clearfix">
+						<ul class="single-choose">
+							<li><input type="checkbox">1</li>
+							<li><input type="checkbox">2</li>
+							<li><input type="checkbox">3</li>
+							<li><input type="checkbox">4</li>
+							<li><input type="checkbox">5</li>
+							<li><input type="checkbox">6</li>
+							<li><input type="checkbox">7</li>
+							<li><input type="checkbox">8</li>
+							<li><input type="checkbox">9</li>
+							<li><input type="checkbox">10</li>
+							<li><input type="checkbox">11</li>
+							<li><input type="checkbox">12</li>
+							<li><input type="checkbox">13</li>
+							<li><input type="checkbox">14</li>
+							<li><input type="checkbox">15</li>
+							<li><input type="checkbox">16</li>
+							<li><input type="checkbox">17</li>
+							<li><input type="checkbox">18</li>
+							<li><input type="checkbox">19</li>
+							<li><input type="checkbox">20</li>
+							<li><input type="checkbox">21</li>
+						</ul>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">星期：</label>
+		  			<div class="col-sm-10 pt">
+		  				<ul class="single-choose week-choose">
+		  					<li><input type="checkbox" class="1">&nbsp;一</li>
+		  					<li><input type="checkbox" class="2">&nbsp;二</li>
+		  					<li><input type="checkbox" class="3">&nbsp;三</li>
+		  					<li><input type="checkbox" class="4">&nbsp;四</li>
+		  					<li><input type="checkbox" class="5">&nbsp;五</li>
+		  					<li><input type="checkbox" class="6">&nbsp;六</li>
+		  					<li><input type="checkbox" class="7">&nbsp;日</li>
+		  				</ul>
+		  			</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">第几节：</label>
+		  			<div class="col-sm-10 pt">
+		  				<ul class="class-choose first" >
+		  					<li><input type="checkbox">&nbsp;晚上2节</li>
+		  					<li><input type="checkbox">&nbsp;晚上3节</li>
+		  				</ul>
+		  				<ul class="class-choose second">
+		  					<li><input type="checkbox">&nbsp;早上4节</li>
+		  					<li><input type="checkbox">&nbsp;下午4节</li>
+		  					<li><input type="checkbox">&nbsp;晚上2节</li>
+		  					<li><input type="checkbox">&nbsp;晚上3节</li>
+		  				</ul>
+		  			</div>
+				</div>
+		  	</form>
+		  	<div class=" sub-footer">
+		  		<button class="btn btn-success">确认</button>
+		  		<button class="btn btn-primary">继续添加时间/地点</button>
+		  	</div>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	$(function (){
+		var flag=true;
+		$(".see-class").click(function(event) {
+			if(flag){
+				$(".all").slideUp(1500,function (){
+					flag=false;
+				});
+				
+			}else{
+				$(".all").slideDown(1500,function (){
+					flag=true;
+				});
+				
+			}
+
+		});
+
+		// $("button.delete").live("click",function(){//jquery1.8以后的版本不支持
+		// 	alert("a");
+		// });
+
+		$("body").on("click","button.delete",function (){
+			console.log($(this).parent().parent().remove());
+		});
+
+		$(".week-choose input").click(function (){
+			var first = 0;
+			var second = 0;
+
+			$(".week-choose input").each(function (){
+				if(parseInt($(this).attr("class"))<5&&$(this).attr("checked")){
+					first++;
+				}else if(parseInt($(this).attr("class"))>=5&&$(this).attr("checked")){
+					second++;
+				}
+			});
+			if(second>0&&first==0){
+				$(".first").css("display","none");
+				$(".second").css("display","block");
+			}else{
+				$(".first").css("display","block");
+				$(".second").css("display","none");
+			}
+
+		});
+
+
+
+		$(".addweeks").click(function(event) {
+			/* Act on the event */
+			/*document.getElementById("choose-content").innerHTML+='<ul class="clearfix"><li class="col-sm-2">连续周：</li><li class="col-sm-4">开始周 <select class="select-choose"><option value=""></option><option value="1">1</option>	<option value="2">2</option>	<option value="3">3</option>	<option value="4">4</option>	<option value="5">5</option>	<option value="6">6</option>	</select></li><li class="col-sm-4">结束周 <select class="select-choose"><option value=""></option><option value="1">1</option>	<option value="2">2</option>	<option value="3">3</option>	<option value="4">4</option>	<option value="5">5</option><option value="6">6</option></select></li><li><button type="button"  class="btn btn-danger delete">删除</button></li></ul>';*/
+			var oUl=document.createElement("ul");
+			oUl.innerHTML='<li class="col-sm-2">连续周：</li><li class="col-sm-4">开始周 <select class="select-choose"><option value=""></option><option value="1">1</option>	<option value="2">2</option>	<option value="3">3</option>	<option value="4">4</option>	<option value="5">5</option>	<option value="6">6</option>	</select></li><li class="col-sm-4">结束周 <select class="select-choose"><option value=""></option><option value="1">1</option>	<option value="2">2</option>	<option value="3">3</option>	<option value="4">4</option>	<option value="5">5</option><option value="6">6</option></select></li><li><button type="button"  class="btn btn-danger delete">删除</button></li>';
+			document.getElementById("choose-content").appendChild(oUl);
+		});
+	});
+</script>

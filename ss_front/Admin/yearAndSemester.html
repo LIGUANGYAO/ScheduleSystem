@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>年份-日期管理</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+  		.title{
+  			margin-bottom:30px;
+  		}
+		.search-info{
+			margin-top: 40px;
+			margin-left: 40px;
+		}
+		.search{
+			margin-top: 30px;
+		}
+		.year-semester p{
+			font-size:16px;
+			line-height: 50px;
+		}
+		.return-info{
+			margin-top: 60px;
+		}
+		.result{
+			margin-top: 80px;
+		}
+		.add-year-semester{
+			margin-top: 40px;
+		}
+		.control{
+			margin-top: 40px;
+		}
+        .clear-data{
+            font-size:16px;
+            line-height: 50px;
+        }
+  	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-8 search-info">
+			<div class="title">
+				<h3 class="text-info">当前年份-学期</h3>
+				<div class="year-semester">
+					
+				</div>
+			</div>
+			<div class="title">
+				<h3 class="text-info">填写当前年份、学期</h3>
+				<div class="add-year-semester">
+					<form role="form" class="form-horizontal clearfix">
+						<label class="col-sm-2 control-label">年份：</label>
+						<div class="col-sm-4" >
+							<select name="" id="year" class="form-control">
+								<option value="2016">2016</option>
+								<option value="2017">2017</option>
+								<option value="2018">2018</option>
+								<option value="2019">2019</option>
+								<option value="2020">2020</option>
+							</select>
+						</div>
+						<label class="col-sm-2 control-label">学期：</label>
+						<div class="col-sm-4" >
+							<select name="" id="semester" class="form-control">
+								<option value="1">第一学期</option>
+								<option value="2">第二学期</option>
+							</select>
+						</div>
+					</form>
+				</div>
+				<div class="control">
+					<button class="btn btn-success pull-right" id="submit">点击提交</button>
+				</div>
+			</div>
+            <br/><br/>
+            <br/><br/>
+            <div class="title">
+                <h3 class="text-info">清空当前学期数据</h3>
+                <p class="text-danger clear-data">点此按钮将清除当前学期的课程和考试数据</p>
+                <button class="btn btn-danger" id="clearCourseData">清空数据</button>
+            </div>
+			<div class="result"></div>
+			<div class="return-info">
+				<p class="error-info"></p>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	$(function (){
+        $("#clearCourseData").on("click",function (){
+            alertify.confirm('清空数据', '确定清除当前学期的课程和考试数据？', function(){
+                System.post(System.base_url+"/Admin/OtherThing/clearCourseDataOfOneSemester",null,function (){
+                    alertify.alert('清空数据',"清空成功!");
+                },function (res){
+                    alertify.alert('清空数据',"清空失败!"+res.msg);
+                });
+            }, function(){ });
+        });
+		System.get(System.base_url+"/Admin/Admin/showYearAndSemester",null,function (res){
+			console.log(res.data.year);
+			$(".year-semester").html("<p class='text-danger'>"+res.data.year+"年--第"+(res.data.semester==1?"一学期":"二学期")+"</p>");
+		},function (res){
+			alertify.alert('年份-日期管理', res.msg);
+		});
+		$("#submit").on("click",function (){
+			var data={
+				"year":$("#year").val(),
+				"semester":$("#semester").val()
+			};
+			System.post(System.base_url+"/Admin/Admin/fillInYearAndSemester",data,function (res){
+				alertify.alert('年份-日期管理',"填写成功!",function (){
+					window.location.reload();
+				});
+			},function (){
+				alertify.alert('年份-日期管理', res.msg);
+			});
+		});
+	});
+
+</script>

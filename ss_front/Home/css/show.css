@@ -1,0 +1,123 @@
+body{
+	font-family: "微软雅黑"
+}
+ul,li{
+	list-style: none;
+	padding: 0;
+	margin:0;
+}
+.info{
+	width:800px;
+	margin:6% auto;
+}
+#disabledInput::-webkit-input-placeholder{
+	font-weight: bold;
+	color:black;
+}
+
+::-webkit-input-placeholder {
+  color: red;
+}
+:-moz-placeholder {/* Firefox 18- */
+  color: red;
+}
+::-moz-placeholder{/* Firefox 19+ */
+ color: red;
+}
+:-ms-input-placeholder {
+  color: red;
+}
+.dropdown{
+	margin:20px 30px;
+}
+.classroom{
+	width:120px;
+	height:24px;
+}
+td,th{
+	width:66px;
+	vertical-align: middle;
+	text-align: center;
+}
+h3{
+	margin:0px;
+}
+.table>thead>tr>th,.table>tbody>tr>th,.table>tbody>tr>td{
+	vertical-align: middle;
+	text-align: center;
+}
+.list-show{
+	line-height: 35px;
+}
+.list-show li{
+	border-bottom: 1px solid black;
+}
+.choose-weeks{
+	width:70%;
+	margin:0px auto;
+	border:1px solid #ccc;
+	border-top:0px;
+	position: relative;
+	margin-bottom: 10px;
+}
+.choose-title h3{
+	width:100%;
+	background: ;
+	text-align: center;
+	line-height: 35px;
+	border-radius: 3px;
+	background:#5AC1DF;
+	color:#fff;
+}
+.choose-content{
+	font-weight: bold;
+	line-height: 30px;
+
+	padding: 10px 0px;
+	padding-bottom: 30px;
+}
+.choose-content ul{
+	margin-top: 10px;
+}
+button.delete{
+	margin-left: 6px;
+}
+.select-choose{
+	width:60%;
+	height:30px;
+	margin-left: 10px;
+}
+.addweeks{
+	position: absolute;
+	bottom: 5px;
+	right: 8px;
+}
+.single-choose li{
+	float:left;
+	width:10%;
+	margin-left: 10px;
+	text-indent: 10px;
+}
+.class-choose li{
+	float:left;
+	width:20%;
+	margin-left: 10px;
+	text-indent: 10px;
+}
+.pt{
+	padding-top: 6px;
+}
+.pb{
+	padding-bottom: 60px;
+}
+.second{
+	display: none;
+}
+.sub-footer{
+	width:80%;
+	margin:0px auto;
+}
+.sub-footer button{
+	width:40%;
+	margin-left: 30px;
+}

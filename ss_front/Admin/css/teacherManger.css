@@ -1,0 +1,126 @@
+.content{
+	border:1px solid #ccc;
+	margin-left:20px;
+	margin-top:7%;
+}
+.admin-info{
+	text-align: center;
+}
+.admin-info h3{
+	font-weight: bold;
+	font-size:16px;
+}
+.function li{
+	line-height: 30px;
+}
+.error-info{
+	text-align: center;
+	color:red;
+}
+#accordion a{
+	line-height:26px;
+}
+.show-content
+{	
+	margin-top:40px;
+	padding:0px 10px;
+	padding-bottom:30px;
+}
+.table-acadmy{
+	float: right;
+}
+.table-list{
+	margin-top: 30px;
+}
+.table>tbody>tr>td{
+	vertical-align: middle;
+}
+.table-index td,th{
+	width:100px;
+	height:50px;
+	text-align:center;
+}
+.table-index button{
+	margin-left: 10px;
+	margin-top: 10px;
+}
+.mr{
+	margin-right:10px;
+}
+.add-teacher{
+	margin-bottom:10px;
+}
+.search-admin{
+	margin-top:20px;
+}
+a:link,a:visited{text-decoration: none;} 
+.list{border-bottom:solid 1px #316a91;margin:10px auto 0 auto;}
+.list ul li{background-color:#467ca2; border:solid 1px #316a91; border-bottom:0;border-radius:2px;}
+.list ul li a{padding-left: 10px;color: #fff; font-size:12px; display: block; font-weight:bold; height:36px;line-height: 36px;position: relative;
+}
+.list ul li ul{display: none;}
+.list ul li ul li { border-left:0; border-right:0; background-color:#6196bb; border-color:#467ca2;}
+.list ul li ul li ul{display: none;}
+.list ul li ul li a{ padding-left:20px;}
+.btn-search{
+	display: block;
+	margin:auto;
+	width:30%;
+}
+.excel{
+	margin-top:30px;
+	padding-bottom:40px;
+}
+span.text-tit{
+	font-size:16px;
+	display: block;
+	line-height:28px;
+	margin-top:10px;
+	margin-bottom: 10px;
+}
+.excel button{
+	display: block;
+	margin-top: 10px;
+}
+#class-warning,#a-b-warning,#other-warning{
+	line-height:40px;
+	font-size:20px;
+	display: inline-block;
+	text-indent:1em;
+}
+a{text-decoration:none;}
+.btn_addPic{
+display: inline-block;
+position: relative;
+height: 39px;
+overflow: hidden;
+padding: 0 30px;
+border: 1px solid #EBEBEB;
+background: none repeat scroll 0 0 #F3F3F3;
+color: #999999;
+font: 14px/39px 'MicroSoft Yahei','Simhei';
+cursor: pointer;
+text-align: center;
+}
+.btn_addPic em {
+background:url(../img/add_24px.png) 0 0;
+display: inline-block;
+width: 24px;
+height: 24px;
+overflow: hidden;
+margin: 10px 5px 10px 0;
+line-height: 20em;
+vertical-align: middle;
+}
+
+.filePrew {
+display: block;
+position: absolute;
+top: 0;
+left: 0;
+width: 140px;
+height: 39px;
+cursor: pointer;
+opacity: 0;
+filter:alpha(opacity: 0);
+}

@@ -1,0 +1,79 @@
+.container{
+	background: url(../img/bg.jpg) no-repeat;
+	background-position:top  center;
+	width:896px;
+	padding-bottom: 20%;
+	margin:auto;
+	padding-bottom:20px;
+}
+.login-window{
+	margin:13% auto;
+	width:580px;
+	background: #fff;
+	border-radius:10px;
+	opacity: 0.94;
+	filter:alpha(opacity:94);
+}
+.title{
+	padding-bottom: 20px;
+	border-bottom: 2px solid black;
+	margin-bottom: 40px;
+}
+.title h3{
+	font-weight:bold;
+	font-size: 40px;
+	text-indent: 1em;
+}
+.row-function{
+	padding-bottom: 10px;
+}
+#error-info{
+	color:red;
+	text-align: center;
+}
+#error-info label{
+	margin-left: 10px;
+}
+.footer{
+	text-align: center;
+	margin-top: 10px;
+}
+.sublogin{
+	width:60%;
+	margin:30px auto;
+	display: block;
+}
+.content{
+	width:80%;
+	margin:0 auto;
+	border:1px solid #ccc;
+	margin-bottom: 20px;
+}
+.login-form{
+	margin-top:20px;
+}
+.choose-login ul{
+	margin:0;
+	padding:0;
+	text-align: center;
+	list-style: none;
+	height:30px;
+	margin-bottom: 20px;
+}
+.choose-login li{
+	line-height:28px;
+	font-weight: bold;
+}
+.dp{
+	display:none;
+}
+.choose-login .active{
+	border:1px solid #ccc;
+	position: relative;
+	top:-1px;
+	font-weight: normal;
+}
+.admin-error,.teach-error{
+	text-align: center;
+	color:red;
+}

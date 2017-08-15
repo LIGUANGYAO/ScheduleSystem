@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>填写监考老师</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <style>
+    	.table-list{
+    		margin-top: 30px;
+    	}
+    </style>
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-9">
+			<div class="error-info"></div>
+			<div class="table-list"></div>
+		</div>
+		<div class="modal fade" id="writeTeacher" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">填写教师姓名</h4>
+              </div>
+              <div class="modal-body">
+                <form class="form-horizontal" id="" enctype="multipart/form-data">
+                	<div class="teacher-list">
+                		<div class="teacher-info">
+		                    <div class="form-group">
+		                       <label  class="col-sm-3 control-label">教师姓名：</label>
+		                        <div class="col-sm-7">
+		                          <input type="text" class="form-control" id="monitor_teacher_name"  placeholder="多个教师请用、隔开">
+		                        </div>
+		                    </div>
+		                    <div style="display:none;">
+		                    	<input type="text" id="classID">
+		                    </div>
+	                   </div>
+                    </div>
+                    <div class="form-group">
+                    	<p class="return-info text-center" style="color:red"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="subTeacher">提交</button>
+                    </div>
+                </form>
+              </div>
+              
+            </div>
+          </div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/common.js"></script>
+	<script type="text/javascript" src="../common/js/showExam.js"></script>
+	<script>
+		$(function (){
+			var post_data = {
+				open_class_academy_id:$.cookie("academy_id"),
+				kind :"update_monitor_teacher",
+				order:"teacher"
+			};
+			showExam(post_data);
+			$("#subTeacher").on("click",function (){
+				var data={
+					id:$("#classID").val(),
+					monitor_teacher_name:$("#monitor_teacher_name").val()
+				};
+				System.post(System.base_url+"/Admin/Exam/updateMonitorTeacher",data,function (res){
+					alertify.alert('填写教师姓名', "填写成功",function (){
+						window.location.reload();
+					});
+				},function (res){
+					$(".return-info").html(res.msg);
+				});
+			});
+		});
+	</script>
+</body>
+</html>

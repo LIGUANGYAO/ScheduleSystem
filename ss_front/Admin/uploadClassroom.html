@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>修改考试</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <link rel="stylesheet" href="css/common.css">
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+  		body{
+  			padding-bottom: 30px;
+  		}
+  		.header-tit{
+  			margin-top: 30px;
+  		}
+  		.classroom-form{
+			margin-top:40px;
+  		}
+  		.table-list button + button {
+  			margin-top: 6px;
+  		}
+  		.table-list table th,.table-list table td{
+			vertical-align: middle !important;
+			text-align: center !important;
+  		}
+  	</style>
+</head>
+<body>
+	<div id="header"></div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="show-content col-sm-9">
+			<div class="classroom">
+				<div class="header-tit">
+					<h3 class="text-info">修改教室</h3>
+				</div>
+				<div class="classroom-form clearfix">
+					<h4 class="text-success">获取考试信息</h4>
+					<form role="form" class="form-horizontal clearfix">
+				  		<div class="form-group">
+				  			<label for="name" class="col-sm-2 control-label">周数选择</label>
+							<div class="col-sm-4 choose-week">
+								<div class="col-sm-6"><input type="radio" value="13" class="input-radio" name="arrweek" checked>13周</div>
+								<div class="col-sm-6"><input type="radio" value="19" class="input-radio" name="arrweek">19周</div>		
+							</div>
+							<div class="col-sm-6">
+								<span class=''>排序:</span>
+								<button type="button" class="btn btn-info btn-teacher">教师</button>
+								<button type="button" class="btn btn-info btn-class">班级</button>
+								<button type="button" class="btn btn-info btn-course">课程</button>
+							</div>
+				  		</div>
+					</form>
+					<div class="error-info"></div>
+				</div>
+			</div>
+			<div class="table-list"></div>
+		  	<div id="pagelist"></div>
+		</div>
+	</div>
+	<div class="modal fade" id="updateClassroom" tabindex="-1" role="dialog" aria-labelledby="upload">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="upload">修改教室(请选择一个地方或其他地方)</h4>
+	          </div>
+	          <div class="modal-body room-list">
+	            <form class="form-horizontal" id="" enctype="multipart/form-data">
+	            	<div class="form-group">
+			  			<label for="" class="col-sm-2 control-label">马兰芳</label>
+			  			<div class="col-sm-10 mlfList">	
+			  			</div>
+		  			</div>
+		  			<div class="form-group">
+			  			<label for="" class="col-sm-2 control-label">北主楼</label>
+			  			<div class="col-sm-10">
+			  				<div class='col-sm-3'><input type="radio" name='room' value='北主楼201'>北主楼201</div>
+			  				<div class='col-sm-3'><input type="radio" name='room' value='北主楼202'>北主楼202</div>
+			  				<div class='col-sm-3'><input type="radio" name='room' value='北主楼203'>北主楼203</div>
+			  				<div class='col-sm-3'><input type="radio" name='room' value='北主楼204'>北主楼204</div>
+			  				<div class='col-sm-3'><input type="radio" name='room' value='北主楼205'>北主楼205</div>
+			  			</div>
+		  			</div>
+		  			<div class="form-group">
+		  				<label for="" class="col-sm-2 control-label">其他地方</label>
+			  			<div class="col-sm-10">	
+			  				<input type="text" class="form-control" id="otherRoom" 
+							   placeholder="请输入其他地方">
+			  			</div>
+		  			</div>
+		  			<div class="form-group">
+		  				<input type="hidden" id="examIdRoom">
+		  			</div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                    <button type="button" class="btn btn-primary" id="upadtaClassroomSub">提交</button>
+	                </div>
+	            </form>
+	          </div>
+	        </div>
+	    </div>
+	</div>
+	<div class="modal fade" id="updateTime" tabindex="-1" role="dialog" aria-labelledby="upload">
+	    <div class="modal-dialog" role="document">
+	        <div class="modal-content">
+	          <div class="modal-header">
+	            <button type="button" class="close" id="closeUpload" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	            <h4 class="modal-title" id="upload">修改时间</h4>
+	          </div>
+	          <div class="modal-body">
+	            <form class="form-horizontal" id="" enctype="multipart/form-data">
+	            	<div class="form-group">
+			  			<label for="" class="col-sm-2 control-label">时间列表</label>
+			  			<div class="col-sm-10 timeList">	
+			  			</div>
+		  			</div>
+		  			<div class="form-group">
+		  				<input type="hidden" id="course_id">
+		  				<input type="hidden" id="week">
+		  			</div>
+	                <div class="modal-footer">
+	                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+	                    <button type="button" class="btn btn-primary" id="upadtaTimeSub">提交</button>
+	                </div>
+	            </form>
+	          </div>
+	        </div>
+	    </div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.js"></script> 
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	alertify.dialog('indexAlert',function factory(){
+	    return{
+	        build: function () {
+	            var header = '<span'+'style="vertical-align:middle;color:#e10000;">'+'</span> 标记课程';
+	            this.setHeader(header);
+	        },
+	        main:function(message){
+	            this.message = message;
+	        },
+	        setup:function(){
+	            return {
+	                buttons:[{text: "确定", key:27}],/*Esc*/
+	                focus: { element:0 }
+	            };
+	        },
+	        prepare: function(){
+	            this.setContent(this.message);
+	        },
+	        callback: function () {
+	        	window.location.href="uploadClassroom.html";
+	            return true;
+	        }
+	    };
+	});
+	function updateRoom(examid){
+		var data={
+			"id":examid
+		};
+		$("#examIdRoom").val(examid);
+		System.post(System.base_url+"/Admin/Exam/getAvailableClassroom",data,function (res){
+			var List="";
+			for(var i=0;i<res.data.length;i++){
+				List+="<div class='col-sm-4'><input type='radio' value='"+res.data[i].classroom_id+"' name='room'>"+res.data[i].classroom+"</div>";
+			}
+			$(".mlfList").html(List);
+		},function (res){
+
+		});
+	}
+	function updateTime(examid){
+		var data={
+			"id":examid
+		};		
+		System.post(System.base_url+"/Admin/Exam/getAvailableTime",data,function (res){
+			var List="";
+			for(var i=0;i<res.data.time.length;i++){
+				List+="<div class='col-sm-6'><input type='radio' name='time' value='"+res.data.time[i].period+"' >"+res.data.time[i].date+"</div>";
+			}
+			console.log(res);
+			$(".timeList").html(List);
+			$("#course_id").val(res.data.course_id);
+			$("#week").val(res.data.week);
+		},function (res){
+
+		});
+	}
+	function getSortData(data){
+		$(".error-info").html("");
+		data.week=$(".choose-week input:checked").val();
+		System.post(System.base_url+"/Admin/Exam/showExam",data,function (res){
+			var examList="<table class='table table-bordered'><th>班级名称</th><th>学生人数</th><th>课程代号</th><th>课程名称</th><th>教师姓名</th><th>考试时间</th><th>考试地点</th><th>操作</th>";
+			for(var i=0;i<res.data.length;i++){
+				examList+="<tr>";
+				examList+="<td>"+res.data[i].class_name+"</td>";
+				examList+="<td>"+res.data[i].student_sum+"</td>";
+				examList+="<td>"+res.data[i].code+"</td>";
+				examList+="<td>"+res.data[i].name+"</td>";
+				examList+="<td>"+res.data[i].teacher_name+"</td>";
+				examList+="<td>"+res.data[i].time+"</td>";
+				examList+="<td id='ad"+res.data[i].id+"'>"+res.data[i].classroom+"</td>";
+				examList+="<td><button class='btn btn-default' data-toggle='modal' data-target='#updateClassroom' onclick='updateRoom("+res.data[i].id+")'>修改教室</button>";
+				if(res.data[i].is_public_course==1){
+					examList+="<button class='btn btn-primary' data-toggle='modal' data-target='#updateTime' onclick='updateTime("+res.data[i].id+")'>修改时间</button>";
+				}
+				examList+="</td>";
+				examList+="</tr>";
+			}
+			examList+="</table>";
+			$(".table-list").html(examList);
+			console.log();
+		},function (res){
+			$(".error-info").html("<p class='text-tit text-center'>"+res.msg+"</p>");
+		});
+	}
+	$(function (){
+		$(".choose-week input[type='radio']").on("change",function (){
+			$(".btn-course").trigger("click");
+		});
+		$(".btn-teacher").on("click",function (){
+			var data={
+				"order":"teacher"
+			};
+			getSortData(data);
+		});
+		$(".btn-class").on("click",function (){
+			var data={
+				"order":"class"
+			};
+			getSortData(data);
+		});
+		$(".btn-course").on("click",function (){
+			var data={
+				"order":"course_name"
+			};
+			getSortData(data);
+		});
+		$(".btn-course").trigger("click");
+		$("#otherRoom").on("focus",function (){
+			$(".room-list").find("input[type='radio']").removeAttr("checked");
+		});
+		$("#upadtaClassroomSub").on("click",function (){
+			var data={
+				"id":$("#examIdRoom").val(),
+			};
+			var newAddress;
+			if($("#otherRoom").val()){
+				var value=$("#otherRoom").val();
+				data.other_classroom=$("#otherRoom").val();
+				newAddress=$("#otherRoom").val();
+			}else{
+				var value=$(".room-list").find("input[type='radio']:checked").val();
+				if(isNaN(value)){
+					data.other_classroom=value;
+					newAddress=value;
+				}else{
+					data.classroom_id=value;
+					newAddress=$(".room-list").find("input[type='radio']:checked").parent().text();
+				}
+			}
+			System.post(System.base_url+"/Admin/Exam/updateExamClassroom",data,function (res){
+				alertify.alert('考试管理', "<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>修改考试教室成功</b>");
+				$("#ad"+$("#examIdRoom").val()).text(newAddress);
+				$(".close").trigger("click");
+				
+			},function (res){
+				alertify.alert('考试管理', "<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>"+res.msg+"</b>");
+			});
+		});
+		$("#upadtaTimeSub").on("click",function (){
+			var value=$(".timeList").find("input[type='radio']:checked").val();
+			var data={
+				"course_id":$("#course_id").val(),
+				"week":$("#week").val(),
+				"period":value
+			};
+			System.post(System.base_url+"/Admin/Exam/updateExamTime",data,function (res){
+				alertify.indexAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>修改考试时间成功</b>");
+			},function (res){
+				alertify.alert('考试管理', "<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>"+res.msg+"</b>");
+			});
+		});
+	});
+</script>

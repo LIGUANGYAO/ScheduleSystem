@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>导出课程表</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta name="renderer" content="webkit">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/common.css">
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+	<!--[if lt IE 9]>
+	    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+	    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+  	<![endif]-->
+  	<style>
+		.mt{
+			margin-top: 30px;
+		}
+		a{
+			color:#fff !important;
+		}	
+  	</style>
+</head>
+<body>
+	<div id="header">
+	</div>
+	<div class="container">
+		<div id="side" class="col-sm-3"></div>
+		<div class="col-sm-9 mt">
+			<div class="teacherCourseExcel excel">
+				<div class="title">
+					<h3 class="text-info">导出教师课程表</h3>
+					<div class="search mt">
+						<form role="form" class="form-horizontal">
+							<label for="teacherName" class="col-sm-2 control-label">教师名字：</label>
+							<div class="col-sm-5">
+								<input type="text" class="form-control" id="teacherName" 
+									   placeholder="请输入教师名字">
+							</div>
+						</form>
+						<button class="btn btn-success teacher-search">查找</button>
+					</div>
+					<div class="teacher-info mt"></div>
+					<div class="teacher-table"></div>
+			  		<div id="teacherPageList"></div>
+				</div>
+			</div>
+			<div class="academyCourseExcel mt">
+				<div class="title">
+					<h3 class="text-danger">导出学院课程表</h3>
+					<div class="search mt">
+						<form role="form" class="form-horizontal">
+							<div class="form-group">
+		                       <label for="" class="col-sm-2 control-label text-right">请选择学院：</label>
+		                        <div class="col-sm-5">
+		                          <select name="academy_id" id="academy_id" class="form-control">
+		                          	<option value="1">经济管理学院</option>
+									<option value="2">政法学院</option>
+									<option value="3">马克思主义学院</option>
+									<option value="4">文学院</option>
+									<option value="5">外国语学院</option>
+									<option value="6">数学与计算科学学院</option>
+									<option value="7">应用物理与材料学院</option>
+									<option value="8">信息工程学院</option>
+									<option value="9">计算机学院</option>
+									<option value="10">机电工程学院</option>
+									<option value="11">土木建筑学院</option>
+									<option value="12">化学与环境工程学院</option>
+									<option value="13">纺织服装学院</option>
+									<option value="14">轨道交通学院</option>
+									<option value="15">艺术设计学院</option>
+									<option value="16">体育部</option>
+									<option value="17">继续教育学院</option>
+		                          </select>
+		                        </div>
+		                        <div class="col-sm-2">
+		                    		<button type="button" class="btn btn-primary" id="outputAcademyCourseExcel">导出</button>
+		                    	</div>
+		                    </div>    
+						</form>
+					</div>
+					<div class="academy-info mt"></div>
+					<div class="academy-table"></div>
+			  		<div id="academyPageList"></div>
+				</div>
+			</div>
+			<div class="classCourseExcel mt">
+				<div class="title">
+					<h3 class="text-default">导出班级课程表</h3>
+					<div class="search mt">
+						<label for="className" class="col-sm-2 control-label text-right">班级名字：</label>
+						<div class="col-sm-5">
+							<input type="text" class="form-control" id="className" 
+								   placeholder="请输入班级名字">
+						</div>
+						<button class="btn btn-success" id="outputClassCourseExcel">导出班级</button>
+					</div>
+					<div class="class-info mt"></div>
+					<div class="class-table"></div>
+			  		<div id="classPageList"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="js/jquery.cookie.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/ajaxfileupload.js"></script> 
+	<script type="text/javascript" src="js/index.js"></script>
+	<script type="text/javascript" src="js/common.js"></script>
+</body>
+</html>
+<script>
+	function getData(page,dataJson){
+		$(".teacher-table").html("");
+		var limit=6;
+		if(dataJson&&dataJson!=="null"){
+			dataJson=dataJson.split("&");
+			var data={};
+			for(var i=0;i<dataJson.length;i++){
+				data[dataJson[i].split("=")[0]]=dataJson[i].split("=")[1];
+				console.log(dataJson);
+			}
+			console.log(data);
+		}else{
+			var data={
+				"name":$("#teacherName").val(),
+				"admin_level":1,
+				"page":page,
+				"limit":limit
+			};
+		}
+		data.limit=limit;
+		data.page=page;
+		System.post(System.base_url+"/Admin/Admin/searchAdmin",data,function (res){
+			var total_page=Math.ceil(res.data.sum/limit);
+			var rows=res.data.teacher_data;
+			console.log(rows);
+			if(rows.length<=0){
+				$(".teacher-table").html("<p class='text-center text-danger'>未查到信息<p>");
+				return;
+			}
+			var teacherList="<table class='table table-index'><th>所属学院</th><th>账号</th><th>名字</th><th>导出教师课程表</th>";
+			for(var i=0;i<rows.length;i++){
+				teacherList+="<tr>";
+				if(rows[i].academy){
+					teacherList+="<td>"+rows[i].academy+"</td>";
+				}else{
+					teacherList+="<td></td>";
+				}
+				teacherList+="<td>"+rows[i].account+"</td>";
+				teacherList+="<td>"+rows[i].name+"</td>";
+				var url=System.base_url+"/Home/Course/outputCourseExcel?teacher_id="+rows[i].id;
+				teacherList+="<td><button class='btn btn-warning'><a href='"+url+"' target='_blank'>导出课程表</a></button></td>";
+				teacherList+="</tr>";
+			}
+			teacherList+="</table>";
+			$(".teacher-table").html(teacherList);
+			makeNavigation(page,total_page, 'getData', 'teacherPageList', 2,data);
+		},function (res){
+			$(".teacher-table").html("<span class='text-tit text-center'>未查询到信息</sapn>");
+		});
+	}
+	$(function (){
+		$(".teacher-search").on("click",function (){
+			getData(1);
+		});
+		$("#outputAcademyCourseExcel").on("click",function (){
+			window.open(System.base_url+"/Home/Course/outputCourseExcel?academy_id="+$("#academy_id").val());
+		});
+		$("#outputClassCourseExcel").on("click",function (){
+			window.open(System.base_url+"/Home/Course/outputCourseExcel?name="+$("#className").val());
+		});
+
+
+
+		if($.cookie("admin_level")==1){
+				$(".academyCourseExcel").css("display","none");
+				$(".classCourseExcel").css("display","none");
+				$("#teacherName").val($.cookie("name"));
+		}
+	});
+
+</script>

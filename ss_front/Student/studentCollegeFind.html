@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+	<meta target="_blank">
+	<link rel="stylesheet" href="css/normalize.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/studentCollegeFind.css" />
+	<link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+</head>
+<body>
+	<div class="header">
+		<h3>学生查找系统</h3>
+	</div>
+	<div class="container">
+		<div class="side">
+		</div>
+		<div class="main">
+			<div class="list clearfix">
+				<ul>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(1)" id="active">经济管理学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(2)">政法学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(3)">马克思主义学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(4)">文学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(5)">外国语学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(6)">数学与计算科学学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(7)">应用物理与材料学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(8)">信息工程学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(9)">计算机学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(10)">机电工程学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(11)">土木建筑学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(12)">化学与环境工程学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(13)">纺织服装学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(14)">轨道交通学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(15)">艺术设计学院</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(16)">体育部</a></li>
+					<li><a href="javascript:void(0);" onclick="getCollegeClass(17)">继续教育学院</a></li>
+				</ul>
+			</div>
+			<div class="table-list"></div>
+		</div>
+
+	</div>
+	<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="js/System.js"></script>
+</body>
+</html>
+<script>
+	function getCollegeClass(academy_id){
+		var data={
+			"academy_id":academy_id
+		};
+		$(".table-list").html("");
+		System.get(System.base_url+"/Home/Course/getClassCourseByAcademy",data,function (res){
+			console.log(res);
+			var cols=Math.ceil(res.data.length/3);
+			if(res.data.length>0){
+				var classList="<table class='table-index'>";
+				for(var i=0;i<cols;i++){
+					classList+="<tr>";
+					for(var j=3*i;j<3*i+3;j++){
+						if(res.data[j]){
+							if(j%2){
+								classList+="<td class='succ'>";
+							}else{
+								classList+="<td class='info'>";
+							}
+							classList+="<a href='studentClassShow.html?name="+res.data[j].class_name+"'>"+res.data[j].class_name+"      "+res.data[j].name+"</a>";
+							classList+="</td>";
+						}
+					}
+					classList+="</tr>";
+				}
+				classList+="</table>";
+				console.log(classList);
+				$(".table-list").append(classList);
+			}else{
+				$(".table-list").append("<span class='text-tit text-center'>未查询到信息</sapn>");
+			}
+			},function (res){
+			console.log(res);
+		});
+	}
+
+	$(function (){
+		$(".side").load("side.html");	
+		$("#active").trigger("click");
+
+	});
+</script>

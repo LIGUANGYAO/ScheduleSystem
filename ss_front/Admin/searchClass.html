@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询课程表</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,Chrome=1" />
+    <meta name="renderer" content="webkit">
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/searchClass.css">
+    <link rel="stylesheet" href="../alertifyjs/css/themes/default.min.css" type="text/css" />
+    <link rel="stylesheet" href="../alertifyjs/css/alertify.min.css" type="text/css" />
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src=" http://html5shiv.googlecode.com/svn/trunk/html5.js "></script >
+    <script src="https://oss.maxcdn.com/libs/respond.web/js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<div id="header"></div>
+<div class="container">
+    <div id="side" class="col-sm-3"></div>
+    <div class="show-content clearfix col-sm-9">
+    </div>
+</div>
+<div class="modal fade" id="openUpdateCourse" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">修改课程表</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="" enctype="multipart/form-data">
+                    <div class="form-group" style="display: none;">
+                        <label for="" class="col-sm-3 control-label">id：</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="courseID">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="classroom_time_data" class="col-sm-3 control-label">修改课程：</label>
+                        <div class="col-sm-8">
+                            <textarea name="classroom_time_data" class="form-control" id="classroom_time_data" rows="10"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <p class="error-info"></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" id="submitCourse">提交</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.cookie.js"></script>
+<script type="text/javascript" src="js/System.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../alertifyjs/alertify.min.js"></script>
+<script type="text/javascript" src="js/ajaxfileupload.js"></script>
+<script type="text/javascript" src="js/index.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="../common/js/queryCourse.js"></script>
+</body>
+</html>
+<script>
+    alertify.dialog('classAlert',function factory(){
+        return{
+            build: function () {
+                var header = '<span'+'style="vertical-align:middle;color:#e10000;">'+'</span> 修改课程表';
+                this.setHeader(header);
+            },
+            main:function(message){
+                this.message = message;
+            },
+            setup:function(){
+                return {
+                    buttons:[{text: "确定", key:27}],/*Esc*/
+                    focus: { element:0 }
+                };
+            },
+            prepare: function(){
+                this.setContent(this.message);
+            },
+            callback: function () {
+                window.location.reload();
+                return true;
+            }
+        };
+    });
+    $(function (){
+        $(".show-content").load("../common/search.html",function (){
+            $("#submit").on("click",function (){
+                $(".table-list").html("");
+                $("#pagelist").html("");
+                getData(1);
+            });
+        });
+        $("#submitCourse").on("click",function (){
+            var data={
+                id:$("#courseID").val(),
+                classroom_time_data:$("#classroom_time_data").val()
+            };
+            System.post(System.base_url+'/Home/Course/updateCourse',data,function (res){
+                alertify.classAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>"+res.msg+"</b>");
+            },function (res){
+                alertify.classAlert("<b style='display:block;margin:20px auto;font-size:24px;color:#000;text-align:center;'>"+res.msg+"</b>");
+            });
+        });
+    });
+    function openUpdateCourse(id,str){
+        $("#courseID").val(id);
+        $("#classroom_time_data").val(str);
+    }
+</script>
